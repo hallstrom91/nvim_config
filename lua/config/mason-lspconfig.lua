@@ -1,6 +1,6 @@
 require("mason-lspconfig").setup({
 	ensure_installed = {
-		-- only LSP servers
+		-- only LSP servers (auto-install)
 		"ts_ls",
 		"html",
 		"cssls",
@@ -13,5 +13,6 @@ require("mason-lspconfig").setup({
 		"yamlls",
 		"cssmodules_ls",
 		"css_variables",
+		"bashls",
 	},
 })
