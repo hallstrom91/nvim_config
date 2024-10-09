@@ -1,81 +1,93 @@
 require("neo-tree").setup({
-	-- general settings
-	close_if_last_window = false, -- Close if the last window
-	popup_border_style = "double", -- values = "rounded", "single", "double"
-	enable_git_status = true,
-	enable_diagnostics = true,
-	-- filesystem
+	-- General settings
+	close_if_last_window = false, -- Close Neo-tree if it's the last window open
+	popup_border_style = "double", -- Border style for popups (rounded, single, double)
+	enable_git_status = true, -- Enable git status integration
+	enable_diagnostics = true, -- Enable diagnostics (e.g., linting info)
+
+	-- Filesystem settings
 	filesystem = {
 		filtered_items = {
-			visible = false, -- when true, they will just be displayed differently than normal items
-			hide_dotfiles = true,
-			hide_gitignored = true,
-			hide_hidden = true, -- only works on Windows for hidden files/directories
-			hide_by_name = {
+			visible = false, -- Show hidden items with a different style
+			hide_dotfiles = true, -- Hide dotfiles by default
+			hide_gitignored = true, -- Hide gitignored files
+			hide_hidden = true, -- Hide hidden files (on Windows only)
+			hide_by_name = { -- Specify items to hide by name
 				-- "node_modules"
 			},
-			always_show = {
+			always_show = { -- Always show these items
 				".gitignored",
 				"node_modules",
 			},
-			always_show_by_pattern = {
+			always_show_by_pattern = { -- Always show items matching these patterns
 				".env*",
 			},
-		}, -- end of filesystem / filtered_items
-		follow_current_file = {
-			enabled = true,
-			leave_dirs_open = false, -- autoclose folders when moving to another
 		},
-		use_libuv_file_watcher = true,
-		-- end of filesystem config
-	},
-	-- default menu config
+
+		-- Automatically follow the current file
+		follow_current_file = {
+			enabled = true, -- Follow the currently active file
+			leave_dirs_open = false, -- Close directories when navigating away
+		},
+
+		use_libuv_file_watcher = true, -- Automatically refresh Neo-tree when files are created/removed
+	}, -- End of filesystem settings
+
+	-- Default UI settings
 	default_component_configs = {
 		indent = {
-			indent_size = 2,
-			padding = 1,
+			indent_size = 2, -- Set the indent size for items in the tree
+			padding = 1, -- Padding around items
 		},
-		-- icons for menu
 		icon = {
-			folder_closed = "",
-			folder_open = "",
-			folder_empty = "",
+			folder_closed = "", -- Icon for closed folders
+			folder_open = "", -- Icon for open folders
+			folder_empty = "", -- Icon for empty folders
 		},
-	}, -- end of "default_component_configs"
+	}, -- End of default component configs
 
+	-- File name settings
 	name = {
-		trailing_slash = false,
-		use_git_status_colors = true,
-		highlight = "NeoTreeFileName",
+		trailing_slash = false, -- Show trailing slash after folder names
+		use_git_status_colors = true, -- Color file names based on git status
+		highlight = "NeoTreeFileName", -- Highlight group for file names
 	},
-	-- git status config and symbols
+
+	-- Git status settings
 	git_status = {
 		symbols = {
 			-- Change type
-			added = "✚", -- or "✚", but this is redundant info if you use git_status_colors on the name
-			modified = " ", -- or " ", but this is redundant info if you use git_status_colors on the name
-			deleted = "✖", -- this can only be used in the git_status source
-			renamed = "󰁕", -- this can only be used in the git_status source
+			added = "✚", -- Symbol for added files
+			modified = "", -- Symbol for modified files
+			deleted = "✖", -- Symbol for deleted files
+			renamed = "󰁕", -- Symbol for renamed files
 			-- Status type
-			untracked = "",
-			ignored = "",
-			unstaged = "󰄱",
-			staged = "",
-			conflict = "",
+			untracked = "", -- Symbol for untracked files
+			ignored = "", -- Symbol for ignored files
+			unstaged = "󰄱", -- Symbol for unstaged changes
+			staged = "", -- Symbol for staged changes
+			conflict = "", -- Symbol for merge conflicts
 		},
 	},
+
+	-- Neo-tree window settings
 	window = {
-		position = "right",
-		width = 30,
+		position = "right", -- Position Neo-tree on the right side of the screen
+		width = 30, -- Set the width of the Neo-tree window
 	},
 
-	-- buffers
+	-- Buffer management settings
 	buffers = {
 		follow_current_file = {
-			enabled = true,
-			leave_dirs_open = false,
+			enabled = true, -- Follow the currently active buffer
+			leave_dirs_open = false, -- Close directories when switching buffers
 		},
 	},
 
-	-- EOF
-})
+	-- Additional custom mappings
+	mappings = {
+		["a"] = "add", -- Press 'a' to add new file or folder
+		["C"] = "create", -- Press 'C' to create a new file/folder
+		["<C-n>"] = "create", -- Ctrl+n to create a new file or folder
+	},
+}) -- End of Neo-tree setup

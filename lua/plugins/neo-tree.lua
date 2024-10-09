@@ -4,7 +4,7 @@ return {
 		"nvim-lua/plenary.nvim",
 		"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
 		"MunifTanjim/nui.nvim",
-		"3rd/image.nvim", -- Optional image support in preview window
+		-- "3rd/image.nvim", -- Optional image support in preview window
 	},
 	config = function()
 		require("config.neo-tree")

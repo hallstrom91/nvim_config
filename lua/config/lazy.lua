@@ -37,11 +37,15 @@ end
 
 -- Load default settings
 vim.o.number = true -- Show line numbers
-vim.o.relativenumber = false -- Relative line numbers
+vim.o.relativenumber = false -- Relative line numbers (very annoying)
 vim.o.expandtab = true -- Use spaces instead of tabs
 vim.o.shiftwidth = 4 -- Indentation width
 vim.o.tabstop = 4 -- Tab width
 vim.o.termguicolors = true -- Enable true colors
+
+-- Window layout (true / false value)
+vim.o.splitbelow = false -- Open windows horizontal
+vim.o.splitright = true -- Open windows vertical
 
 -- disable providers
 vim.g.loaded_node_provider = 0
@@ -53,7 +57,7 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- theme
+-- theme settings
 -- vim.g.gruvbox_contrast_dark = "medium" -- hard / medium / soft
 -- vim.g.gruvbox_invert_selection = 0
 

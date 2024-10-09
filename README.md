@@ -2,6 +2,8 @@
 
 ## Requirements
 - **Neovim**: v0.10.1 or later
+- 3rd/Image -plugin requires Luarocks, Magick, ImageMagick & Kitty.
+
 
 ## Install
 
