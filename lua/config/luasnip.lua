@@ -1,9 +1,6 @@
-require("luasnip.loaders.from_vscode").lazy_load()
+--require("luasnip.loaders.from_vscode").lazy_load()
 -- require("vim-react-snippets").lazy_load()
 local ls = require("luasnip")
-local s = ls.snippet -- define snippet
-local i = ls.insert_node -- define text-node, static text
-local t = ls.text_node -- insert-node for user values
 
 ls.snippets = {
 	-- custom lua snippets
@@ -13,62 +10,19 @@ ls.snippets = {
 	-- custom js snippets
 	javascript = {
 		-- For loop
-		s("for", {
-			t("for (let "),
-			i(1, "i"),
-			t(" = 0; "),
-			i(2, "i"),
-			t(" < "),
-			i(3, "array.length"),
-			t("; "),
-			i(4, "i++"),
-			t(") {"),
-			t({ "", "  " }),
-			i(0),
-			t({ "", "}" }),
-		}),
+		ls.parser.parse_snippet("for", "for (let ${1:i} = 0; ${1:i} < ${2:array.length}; ${1:i}++) {\n  $0\n}"),
 
 		-- forEach loop
-		s("foreach", {
-			i(1, "array"),
-			t(".forEach(("),
-			i(2, "item"),
-			t(", "),
-			i(3, "index"),
-			t(") => {"),
-			t({ "", "  " }),
-			i(0),
-			t({ "", "});" }),
-		}),
+		ls.parser.parse_snippet("foreach", "${1:array}.forEach((${2:item}, ${3:index}) => {\n  $0\n});"),
 
 		-- For...of loop
-		s("forof", {
-			t("for (const "),
-			i(1, "item"),
-			t(" of "),
-			i(2, "array"),
-			t(") {"),
-			t({ "", "  " }),
-			i(0),
-			t({ "", "}" }),
-		}),
+		ls.parser.parse_snippet("forof", "for (const ${1:item} of ${2:array}) {\n  $0\n}"),
 
 		-- For...in loop
-		s("forin", {
-			t("for (const "),
-			i(1, "key"),
-			t(" in "),
-			i(2, "object"),
-			t(") {"),
-			t({ "", "  if (Object.hasOwnProperty.call(" }),
-			i(3, "object"),
-			t(", "),
-			i(1, "key"),
-			t(")) {"),
-			t({ "", "    " }),
-			i(0),
-			t({ "", "  }", "}" }),
-		}),
+		ls.parser.parse_snippet(
+			"forin",
+			"for (const ${1:key} in ${2:object}) {\n  if (Object.hasOwnProperty.call(${2:object}, ${1:key})) {\n    $0\n  }\n}"
+		),
 	},
 
 	-- reactjs

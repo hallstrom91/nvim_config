@@ -8,11 +8,11 @@ local map = vim.keymap.set
 vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
--- Default nvim keybinds 
+-- Default nvim keybinds
 map("n", ";", ":", { desc = "CMD enter command mode" }) -- open cmd mode with ;
 map("i", "jk", "<ESC>") -- leave instert mode with "jk"
-
--- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>") -- save with ctrl+s in all modes
+map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>") -- save with ctrl+s in all modes
+vim.keymap.set({ "n", "v", "x" }, "<C-c>", '"+y', { noremap = true, silent = true }) -- Copy with ctrl+c in all modes
 
 ----- Move row UP  with Alt+Up-arrowkey
 map("n", "<A-Up>", ":m .-2<CR>==", { noremap = true, silent = true })
@@ -51,13 +51,13 @@ map("n", "<S-Down>", "v<Down>", { noremap = true, silent = true })
 map("v", "<S-Left>", "<Left>", { noremap = true, silent = true })
 map("v", "<S-Right>", "<Right>", { noremap = true, silent = true })
 map("v", "<S-Up>", "<Up>", { noremap = true, silent = true })
-map("v", "<S-Down>", "<Down>", { noremap = true, silent = true }) 
+map("v", "<S-Down>", "<Down>", { noremap = true, silent = true })
 
 -- Save the current buffer in Insert mode
-map("i", "<C-s>", "<Esc>:w<CR>a", { noremap = true, silent = true }) -- ctrl + s
+-- map("i", "<C-s>", "<Esc>:w<CR>a", { noremap = true, silent = true }) -- ctrl + s
 
 -- Save the current buffer in Visual mode
-map("v", "<C-s>", "<Esc>:w<CR>", { noremap = true, silent = true }) -- ctrl + s
+-- map("v", "<C-s>", "<Esc>:w<CR>", { noremap = true, silent = true }) -- ctrl + s
 
 ------------------------
 --- Plugin binds
@@ -78,8 +78,7 @@ map("n", "<C-8>", "<Cmd>BufferLineGoToBuffer 8<CR>", { noremap = true, silent = 
 map("n", "<C-9>", "<Cmd>BufferLineGoToBuffer 9<CR>", { noremap = true, silent = true })
 map("n", "<C-0>", "<Cmd>BufferLineGoToBuffer -1<CR>", { noremap = true, silent = true }) -- Go to last visible buffer
 
-
 -- Neo-tree binds
-map("n", "<C-n>", ":Neotree toggle position=right reveal_force_cwd=true<CR>", { noremap = true, silent = true }) -- Ctrl + n: Toggle Neo-tree file explorer 
+map("n", "<C-n>", ":Neotree toggle position=right reveal_force_cwd=true<CR>", { noremap = true, silent = true }) -- Ctrl + n: Toggle Neo-tree file explorer
 map("n", "<leader>b", ":Neotree toggle show buffers right<CR>", { noremap = true, silent = true }) -- space + b: Toggle Neo-tree to show buffers on the right
 map("n", "<leader>s", ":Neotree float git_status<CR>", { noremap = true, silent = true }) -- space + s: Show git status in Neo-tree

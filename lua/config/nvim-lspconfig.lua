@@ -2,19 +2,46 @@ local lspconfig = require("lspconfig")
 local init_capabilities = vim.lsp.protocol.make_client_capabilities()
 init_capabilities = require("cmp_nvim_lsp").default_capabilities(init_capabilities)
 
+local lsp_flags = { debounce_text_changes = 150 }
 -- List of LSP servers
 local servers = {
-	ts_ls = {}, -- Typescript & JavaScript
+	-- Typescript & JavaScript
+	ts_ls = {
+		settings = {
+			completions = {
+				completeFunctionCalls = true,
+			},
+			filetypes = { "typescript", "typescriptreact", "tsx", "javascript", "javascriptreact", "jsx" },
+		},
+	},
 	cssls = {}, -- CSS
 	html = {}, -- HTML
 	pyright = {}, -- Python
-	lua_ls = {}, -- Lua
+	lua_ls = {
+		settings = {
+			Lua = {
+				diagnostics = {
+					globals = { "vim" },
+				},
+			},
+		},
+	}, -- Lua
 	tailwindcss = {}, -- Tailwindcss
 	marksman = {}, -- Markdown (github readme etc)
 	quick_lint_js = {}, -- JavaScript Linting
 	vimls = {}, -- Vim
 	yamlls = {}, -- YAML
-	cssmodules_ls = {}, -- CSS modules
+	cssmodules_ls = {
+		filetypes = {
+			"typescript",
+			"typescriptreact",
+			"typescript.tsx",
+			"javascript",
+			"javascriptreact",
+			"javascript.jsx",
+		},
+		camelCase = true,
+	}, -- CSS modules
 	css_variables = {}, -- CSS Variables
 	bashls = {}, -- Bash (.sh -files)
 }
@@ -30,58 +57,19 @@ local on_attach = function(client, bufnr)
 		"yamlls", -- Use Prettier
 	}
 
+	--	vim.api.nvim_buf_set_options(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+	--	vim.api.nvim_buf_set_options(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
+
 	if vim.tbl_contains(exclude_formatting, client.name) then
 		client.server_capabilities.documentFormattingProvider = false
 	end
 end
-
--- local on_attach = function(client, bufnr)
--- specific what servers to deactivate LSP formatter
---	if client.name == "ts_ls" or client.name == "html" or client.name == "cssls" then
---		client.server_capabilities.documentFormattingProvider = false
---	end
--- end
 
 -- Loop servers
 for server, config in pairs(servers) do
 	lspconfig[server].setup(vim.tbl_deep_extend("force", {
 		on_attach = on_attach,
 		capabilities = init_capabilities,
+		flags = lsp_flags,
 	}, config))
 end
-
--- typescript, tsx, js & jsx
---lspconfig.ts_ls.setup({})
-
--- css
---lspconfig.cssls.setup({})
-
--- html
---lspconfig.html.setup({})
-
--- python
---lspconfig.pyright.setup({})
-
---lua
---lspconfig.lua_ls.setup({})
-
--- tailwindcss
---lspconfig.tailwindcss.setup({})
-
---marksman
---lspconfig.marksman.setup({})
-
--- quick lint js
---lspconfig.quick_lint_js.setup({})
-
--- vim
---lspconfig.vimls.setup({})
-
--- yaml
---lspconfig.yamlls.setup({})
-
--- css modules
---lspconfig.cssmodules_ls.setup({})
-
--- css variables
---lspconfig.css_variables.setup({})

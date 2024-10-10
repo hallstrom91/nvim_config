@@ -29,8 +29,8 @@ require("lualine").setup({
 		-- current mode display (no.1 from left)
 		lualine_a = {
 			{
-				mode_with_icon, -- use custom mode function
-				padding = { left = 1, right = 3 },
+				--	mode_with_icon, -- use custom mode function
+				--	padding = { left = 1, right = 3 },
 			},
 		},
 
@@ -81,7 +81,7 @@ require("lualine").setup({
 					info = "DiagnosticInfo", -- Changes diagnostics' info color.
 					hint = "DiagnosticHint", -- Changes diagnostics' hint color.
 				},
-				symbols = { error = "E", warn = "W", info = "I", hint = "H" },
+				symbols = { error = " E", warn = " W", info = " I", hint = "󰘥 H" },
 				colored = false,
 			},
 		},
@@ -91,7 +91,9 @@ require("lualine").setup({
 	tabline = {
 		lualine_a = {
 			{
-				"hostname",
+				--				"hostname",
+				mode_with_icon, -- use custom mode function
+				padding = { left = 1, right = 3 },
 			},
 		},
 		lualine_b = {
@@ -127,5 +129,6 @@ require("lualine").setup({
 		section_separators = { left = "", right = "" },
 		component_separators = { left = "", right = "" },
 		always_divide_middle = true,
+		show_buffer_close_icons = true,
 	},
 })

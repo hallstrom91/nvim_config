@@ -45,14 +45,14 @@ This configuration includes the following plugins:
 * conform.lua
 * mason.lua
 * nvim-colorizer.lua
-* tailwindcss-colorizer-cmp.lua
+* tailwindcss-colorizer-cmp.lua 
 * lazy.lua
 * neo-tree.lua
 * nvim-lspconfig.lua
 * luasnip.lua
 * noice.lua
 * nvim-treesitter.lua
-* mason-lspconfig.lua
+* mason-lspconfig.lua  
 * nvim-cmp.lua
 * prettier.lua
 
