@@ -1,4 +1,6 @@
+------------------------
 -- Format on save
+------------------------
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*",
 	callback = function(args)
@@ -6,8 +8,10 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
--- open :h -docs in vertical window
+------------------------
+-- open in vertical mode
+------------------------
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "help",
-	command = "wincmd L", -- Flyttar hjälpfönstret till höger som vertikal split
+	command = "wincmd L",
 })

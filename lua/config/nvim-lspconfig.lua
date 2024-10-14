@@ -11,7 +11,7 @@ local servers = {
 			completions = {
 				completeFunctionCalls = true,
 			},
-			filetypes = { "typescript", "typescriptreact", "tsx", "javascript", "javascriptreact", "jsx" },
+			filetypes = { "typescript", "typescriptreact", "tsx", "javascript", "javascriptreact", "jsx", "js" },
 		},
 	},
 	cssls = {}, -- CSS

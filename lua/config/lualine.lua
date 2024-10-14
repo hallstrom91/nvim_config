@@ -29,8 +29,8 @@ require("lualine").setup({
 		-- current mode display (no.1 from left)
 		lualine_a = {
 			{
-				--	mode_with_icon, -- use custom mode function
-				--	padding = { left = 1, right = 3 },
+				mode_with_icon, -- use custom mode function
+				padding = { left = 1, right = 3 },
 			},
 		},
 
@@ -42,18 +42,18 @@ require("lualine").setup({
 			},
 			{
 				"diff",
-				color_added = "#00AD09", -- Green for added
-				color_modified = "#E37D30", -- orange for modified
-				color_removed = "#9D0000", -- red for deleted
+				color_added = "#00AD09",
+				color_modified = "#E37D30",
+				color_removed = "#9D0000",
 				symbols = { added = "✚ ", modified = "✎ ", removed = "✖ " },
 			},
 		},
 		lualine_c = {
 			{
 				"filename",
-				file_status = true, -- Visar om filen är modifierad eller ej
-				newfile_status = true, -- Visar om filen är ny
-				path = 1, -- 1: bara filnamn, 2: filnamn med sökväg, 3: full sökväg
+				file_status = true, -- show modified or not
+				newfile_status = true,
+				path = 0, -- 1 =  filename, 2: filename with path, 3: full path
 			},
 		},
 		lualine_x = {
@@ -65,7 +65,8 @@ require("lualine").setup({
 		},
 		lualine_y = {
 			{
-				"encoding",
+				current_time,
+				icon = " ",
 			},
 		},
 		lualine_z = {
@@ -86,42 +87,6 @@ require("lualine").setup({
 			},
 		},
 	}, -- End of section config
-
-	-- layout for tabline (TOP)
-	tabline = {
-		lualine_a = {
-			{
-				--				"hostname",
-				mode_with_icon, -- use custom mode function
-				padding = { left = 1, right = 3 },
-			},
-		},
-		lualine_b = {
-			{
-
-				"buffers",
-				mode = 0,
-				show_filename_only = true, -- Endast visa filnamnet, utan full sökväg
-				show_modified_status = false, -- Visa om filen är modifierad
-				icons_enabled = true,
-				padding = { left = 1, right = 2 },
-				symbols = {
-					modified = "󰮍 ",
-					alternate_file = "󱪔 ",
-					directory = " ",
-				},
-			},
-		},
-		lualine_c = {},
-		lualine_x = {},
-		lualine_y = {},
-		lualine_z = {
-			{
-				current_time,
-				icon = " ",
-			},
-		},
-	},
 
 	options = {
 		theme = "auto", -- Set theme (optional)

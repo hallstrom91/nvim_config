@@ -1,4 +1,6 @@
+------------------------
 -- Bootstrap lazy.nvim
+------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
@@ -15,7 +17,9 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+------------------------
 -- Load mappings
+------------------------
 local mappings_path = vim.fn.stdpath("config") .. "/lua/mappings.lua"
 local mappings_exists = vim.fn.filereadable(mappings_path)
 
@@ -25,7 +29,9 @@ else
 	vim.api.nvim_echo({ { "mappings.lua file not found", "WarningMsg" } }, true, {})
 end
 
+------------------------
 -- Load autocmds
+------------------------
 local autocmds_path = vim.fn.stdpath("config") .. "/lua/autocmds.lua"
 local autocmds_exists = vim.fn.filereadable(autocmds_path)
 
@@ -35,36 +41,33 @@ else
 	vim.api.nvim_echo({ { "autocmds.lua file not found", "WarningMsg" } }, true, {})
 end
 
+------------------------
 -- Load default settings
+------------------------
 vim.o.number = true -- Show line numbers
 vim.o.relativenumber = false -- Relative line numbers (very annoying)
 vim.o.expandtab = true -- Use spaces instead of tabs
 vim.o.shiftwidth = 4 -- Indentation width
 vim.o.tabstop = 4 -- Tab width
 vim.o.termguicolors = true -- Enable true colors
-
--- Window layout (true / false value)
 vim.o.splitbelow = false -- Open windows horizontal
 vim.o.splitright = true -- Open windows vertical
+vim.g.loaded_netrw = 1 -- disable netrw
+vim.g.loaded_netrwPlugin = 1 -- disable netrw
 
--- disable providers
-vim.g.loaded_node_provider = 0
+------------------------
+-- Disable providers
+------------------------
+vim.g.loaded_node_provider = 1
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 
--- disable netrw - use neo-tree instead
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
--- theme settings
--- vim.g.gruvbox_contrast_dark = "medium" -- hard / medium / soft
--- vim.g.gruvbox_invert_selection = 0
-
+------------------------
 -- Setup lazy.nvim
+------------------------
 require("lazy").setup({
 	spec = {
-		-- import your plugins
 		{ import = "plugins" },
 	},
 	-- Configure any other settings here. See the documentation for more details.

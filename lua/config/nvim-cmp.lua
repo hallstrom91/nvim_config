@@ -10,21 +10,17 @@ cmp.setup({
 	},
 	formatting = {
 		format = function(entry, vim_item)
-			-- Först använd tailwind formatter
 			vim_item = tailwind_formatter(entry, vim_item)
-			-- Sen lägg till ikoner från lspkind
+			-- show icons from lspkind
 			vim_item = lspkind.cmp_format({
-				mode = "symbol_text", -- visa både ikon och text
-				maxwidth = 50, -- maxbredd för popup
-				ellipsis_char = "...", -- vad som visas om det blir för långt
+				mode = "symbol_text",
+				maxwidth = 50,
+				ellipsis_char = "...",
 			})(entry, vim_item)
 			return vim_item
 		end,
 	},
-	-- old formatter tailwindcss colors
-	-- formatting = {
-	--   format = require("tailwindcss-colorizer-cmp").formatter, -- Tailwind CSS formatter
-	-- },
+
 	mapping = {
 		["<C-p>"] = cmp.mapping.select_prev_item(),
 		["<C-n>"] = cmp.mapping.select_next_item(),
@@ -60,7 +56,7 @@ cmp.setup({
 	},
 
 	sources = cmp.config.sources({
-		{ name = "nvim_lsp" }, -- Koppling till LSP
+		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
 		{ name = "buffer" },
 		{ name = "nvim_lua" },

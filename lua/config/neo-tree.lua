@@ -9,7 +9,7 @@ require("neo-tree").setup({
 	filesystem = {
 		filtered_items = {
 			visible = false, -- Show hidden items with a different style
-			hide_dotfiles = true, -- Hide dotfiles by default
+			hide_dotfiles = false, -- Hide dotfiles by default
 			hide_gitignored = true, -- Hide gitignored files
 			hide_hidden = true, -- Hide hidden files (on Windows only)
 			hide_by_name = { -- Specify items to hide by name
