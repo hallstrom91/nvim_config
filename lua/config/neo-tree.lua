@@ -1,7 +1,12 @@
+vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticSignError" })
+vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
+vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
+vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
+
 require("neo-tree").setup({
 	-- General settings
-	close_if_last_window = false, -- Close Neo-tree if it's the last window open
-	popup_border_style = "double", -- Border style for popups (rounded, single, double)
+	close_if_last_window = true, -- Close Neo-tree if it's the last window open
+	popup_border_style = "rounded", -- Border style for popups (rounded, single, double)
 	enable_git_status = true, -- Enable git status integration
 	enable_diagnostics = true, -- Enable diagnostics (e.g., linting info)
 
@@ -72,8 +77,8 @@ require("neo-tree").setup({
 
 	-- Neo-tree window settings
 	window = {
-		position = "right", -- Position Neo-tree on the right side of the screen
-		width = 30, -- Set the width of the Neo-tree window
+		position = "left", -- Position Neo-tree on the right side of the screen
+		width = 35, -- Set the width of the Neo-tree window
 	},
 
 	-- Buffer management settings

@@ -12,7 +12,7 @@ require("bufferline").setup({
 
 		-- Indicator for the active buffer
 		indicator = {
-			icon = "▎󰸞", -- indicator for active buffer
+			icon = "▎󰸞 ", -- indicator for active buffer
 			style = "icon", -- can be 'icon', 'underline', or 'none'
 		},
 

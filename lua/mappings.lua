@@ -65,7 +65,7 @@ map("i", "<S-Down>", "<C-o>v<Down>", { noremap = true, silent = true })
 ------------------------
 
 -- Telescope binds
--- map("n", "<leader>pd", ":Telescope diagnostics<CR>", { noremap = true, silent = true }) -- space + d: Show diagnostics
+map("n", "<leader>pd", ":Telescope diagnostics<CR>", { noremap = true, silent = true }) -- space + d: Show diagnostics
 
 -- Neo-tree binds
 map("n", "<C-n>", ":Neotree toggle position=right reveal_force_cwd=true<CR>", { noremap = true, silent = true }) -- Ctrl + n: Toggle Neo-tree file explorer
