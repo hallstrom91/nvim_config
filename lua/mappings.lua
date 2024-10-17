@@ -13,7 +13,14 @@ map("n", ";", ":", { desc = "CMD enter command mode" }) -- open cmd mode with ;
 map("i", "jk", "<ESC>") -- leave instert mode with "jk"
 map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>") -- save with ctrl+s in all modes
 map({ "n", "v", "i" }, "<C-c>", '"+y', { noremap = true, silent = true }) -- Copy with ctrl+c in all modes
-map({ "n", "v", "i" }, "<C-v>", '"+p', { noremap = true, silent = true }) -- Paste with ctrl+v in normal, visual, and insert modes
+-- map({ "n", "v", "i" }, "<C-v>", '"+p', { noremap = true, silent = true }) -- Paste with ctrl+v in normal, visual, and insert modes
+
+-- Paste in Normal mode
+map("n", "<C-v>", '"+p', { noremap = true, silent = true })
+-- Paste in Visual mode (replace selected text with clipboard content)
+map("v", "<C-v>", '"+p', { noremap = true, silent = true })
+-- Paste in Insert mode
+map("i", "<C-v>", "<C-r>+", { noremap = true, silent = true })
 
 ----- Move row UP  with Alt+Up-arrowkey
 map("n", "<A-Up>", ":m .-2<CR>==", { noremap = true, silent = true })
@@ -39,8 +46,13 @@ map("n", "<C-z>", "u", { noremap = true, silent = true })
 map("i", "<C-z>", "<C-o>u", { noremap = true, silent = true })
 
 -- remove with backspace key
+--map("v", "<BS>", '"_d', { noremap = true, silent = true })
+--map("i", "<BS>", '<C-o>"_d', { noremap = true, silent = true })
+
+-- Allow backspace in Insert mode
+map("i", "<BS>", "<BS>", { noremap = true, silent = true })
+-- Allow backspace in Visual mode (delete selected text)
 map("v", "<BS>", '"_d', { noremap = true, silent = true })
-map("i", "<BS>", '<C-o>"_d', { noremap = true, silent = true })
 
 -- Shift + Arrow keys for text selection in normal mode
 map("n", "<S-Left>", "v<Left>", { noremap = true, silent = true })
