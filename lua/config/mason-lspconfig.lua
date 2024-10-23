@@ -14,5 +14,6 @@ require("mason-lspconfig").setup({
 		"cssmodules_ls",
 		"css_variables",
 		"bashls",
+		"jsonls",
 	},
 })

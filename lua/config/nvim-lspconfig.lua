@@ -1,13 +1,22 @@
 local lspconfig = require("lspconfig")
 local init_capabilities = vim.lsp.protocol.make_client_capabilities()
 init_capabilities = require("cmp_nvim_lsp").default_capabilities(init_capabilities)
-
+local ufo_capabilities = vim.lsp.protocol.make_client_capabilities()
 local lsp_flags = { debounce_text_changes = 150 }
+
+ufo_capabilities.textDocument.foldingRange = {
+	dynamicRegistration = false,
+	lineFoldingOnly = true,
+}
+
+init_capabilities = vim.tbl_deep_extend("keep", init_capabilities, ufo_capabilities)
+
 -- List of LSP servers
 local servers = {
 	-- Typescript & JavaScript
 	ts_ls = {
 		settings = {
+			cmd = { "typescript-language-server", "--stdio" },
 			completions = {
 				completeFunctionCalls = true,
 			},
@@ -44,21 +53,44 @@ local servers = {
 	}, -- CSS modules
 	css_variables = {}, -- CSS Variables
 	bashls = {}, -- Bash (.sh -files)
+	jsonls = {
+		schemas = {
+			{
+				fileMatch = { "package.json" },
+				url = "https://json.schemastore.org/package.json",
+			},
+			{
+				fileMatch = { "tsconfig*.json" },
+				url = "https://json.schemastore.org/tsconfig.json",
+			},
+			{
+				fileMatch = { ".prettierrc", ".prettierrc.json", "prettier.config.json" },
+				url = "https://json.schemastore.org/prettierrc.json",
+			},
+			{
+				fileMatch = { ".eslintrc", ".eslintrc.json" },
+				url = "https://json.schemastore.org/eslintrc.json",
+			},
+			{
+				fileMatch = { ".babelrc", ".babelrc.json", "babel.config.json" },
+				url = "https://json.schemastore.org/babelrc.json",
+			},
+		},
+	},
 }
 
 -- deactivate LSP formatting in favor of prettier, stylua, black etc.
 local on_attach = function(client, bufnr)
 	local exclude_formatting = {
-		"ts_ls", -- Use prettier JS/TSUpdate
+		"ts_ls", -- Use prettier
 		"html", -- Use prettier
 		"cssls", -- Use prettier
 		"luals", -- Use stylua
 		"pyright", -- Use isort & black
 		"yamlls", -- Use Prettier
+		"marksman", -- use Prettier
+		"jsonls", -- use Prettier
 	}
-
-	--	vim.api.nvim_buf_set_options(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-	--	vim.api.nvim_buf_set_options(bufnr, "tagfunc", "v:lua.vim.lsp.tagfunc")
 
 	if vim.tbl_contains(exclude_formatting, client.name) then
 		client.server_capabilities.documentFormattingProvider = false

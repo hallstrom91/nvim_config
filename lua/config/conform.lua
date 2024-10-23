@@ -8,6 +8,7 @@ require("conform").setup({
 		typescriptreact = { "prettier" },
 		html = { "prettier" },
 		css = { "prettier" },
+		markdown = { "prettier" },
 	},
 	format_on_save = {
 		timeout_ms = 1000,

@@ -1,7 +1,7 @@
 return {
-  'MunifTanjim/prettier.nvim',
-  config = function()
-    require("config.prettier")
-  end,
+	"MunifTanjim/prettier.nvim",
+	event = { "BufWritePre" },
+	config = function()
+		require("config.prettier")
+	end,
 }
-

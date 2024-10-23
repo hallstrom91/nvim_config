@@ -1,4 +1,4 @@
-------------------------
+-----------------------
 -- Bootstrap lazy.nvim
 ------------------------
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -54,7 +54,12 @@ vim.o.splitbelow = false -- Open windows horizontal
 vim.o.splitright = true -- Open windows vertical
 vim.g.loaded_netrw = 1 -- disable netrw
 vim.g.loaded_netrwPlugin = 1 -- disable netrw
-
+vim.o.foldenable = true -- enable folding
+vim.o.foldlevel = 99
+vim.o.foldlevelstart = 99
+vim.o.foldcolumn = "1"
+--vim.o.foldmethod = "expr"
+--vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 ------------------------
 -- Disable providers
 ------------------------
