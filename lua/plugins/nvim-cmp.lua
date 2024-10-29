@@ -10,8 +10,9 @@ return {
 		"L3MON4D3/LuaSnip",
 		"saadparwaiz1/cmp_luasnip",
 		"onsails/lspkind.nvim",
+		"SergioRibera/cmp-dotenv",
 	},
 	config = function()
-		require("config.nvim-cmp") -- load config
+		require("config.nvim-cmp")
 	end,
 }

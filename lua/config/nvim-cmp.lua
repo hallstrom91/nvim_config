@@ -21,6 +21,10 @@ cmp.setup({
 		end,
 	},
 
+	performance = {
+		max_view_entries = 10, -- show max 10 suggestions in CMP list
+	},
+
 	mapping = {
 		["<C-p>"] = cmp.mapping.select_prev_item(),
 		["<C-n>"] = cmp.mapping.select_next_item(),
@@ -61,5 +65,21 @@ cmp.setup({
 		{ name = "buffer" },
 		{ name = "nvim_lua" },
 		{ name = "path" },
+		{
+			name = "dotenv",
+			option = {
+				path = ".",
+				load_shell = true,
+				item_kind = cmp.lsp.CompletionItemKind.Variable,
+				eval_on_confirm = false,
+				show_documentation = true,
+				show_content_on_docs = true,
+				documentation_kind = "markdown",
+				dotenv_environment = ".*",
+				file_priority = function(a, b)
+					return a:upper() < b:upper()
+				end,
+			},
+		},
 	}),
 })

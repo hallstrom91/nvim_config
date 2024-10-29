@@ -23,9 +23,19 @@ local servers = {
 			filetypes = { "typescript", "typescriptreact", "tsx", "javascript", "javascriptreact", "jsx", "js" },
 		},
 	},
-	cssls = {}, -- CSS
-	html = {}, -- HTML
-	pyright = {}, -- Python
+	-- CSS
+	cssls = {
+		filetypes = {
+			"css",
+			"scss",
+			"less",
+		},
+	},
+	-- HTML
+	html = { filetypes = { "html" } },
+	-- Python
+	pyright = { filetypes = { "python" } },
+	-- Lua
 	lua_ls = {
 		settings = {
 			Lua = {
@@ -34,12 +44,42 @@ local servers = {
 				},
 			},
 		},
-	}, -- Lua
-	tailwindcss = {}, -- Tailwindcss
-	marksman = {}, -- Markdown (github readme etc)
-	quick_lint_js = {}, -- JavaScript Linting
-	vimls = {}, -- Vim
-	yamlls = {}, -- YAML
+		filetypes = { "lua" },
+	},
+	-- Tailwindcss
+	tailwindcss = {
+		filetypes = {
+			"html",
+			"css",
+			"scss",
+			"javascriptreact",
+			"typescriptreact",
+		},
+	},
+	-- Markdown (github readme etc)
+	marksman = {
+		filetypes = { "markdown" },
+	},
+	-- JavaScript Linting
+	quick_lint_js = {
+		filetypes = {
+			"javascript",
+			"javascriptreact",
+			"typescriptreact",
+			"typescript",
+		},
+	},
+	-- Vim
+	vimls = {
+		filetypes = {
+			"vim",
+		},
+	},
+	-- YAML
+	yamlls = {
+		filetypes = { "yaml", "yml" },
+	},
+	-- CSS modules
 	cssmodules_ls = {
 		filetypes = {
 			"typescript",
@@ -50,10 +90,22 @@ local servers = {
 			"javascript.jsx",
 		},
 		camelCase = true,
-	}, -- CSS modules
-	css_variables = {}, -- CSS Variables
-	bashls = {}, -- Bash (.sh -files)
+	},
+	-- CSS Variables
+	css_variables = {
+		filetypes = {
+			"css",
+			"scss",
+			"less",
+		},
+	},
+	-- Bash (.sh -files)
+	bashls = {
+		filetypes = { "sh", "bash" },
+	},
+	-- JSON
 	jsonls = {
+		filetypes = { "json" },
 		schemas = {
 			{
 				fileMatch = { "package.json" },
@@ -81,15 +133,16 @@ local servers = {
 
 -- deactivate LSP formatting in favor of prettier, stylua, black etc.
 local on_attach = function(client, bufnr)
+	-- Use prettier instead of LSP formatter for this lsp servers
 	local exclude_formatting = {
-		"ts_ls", -- Use prettier
-		"html", -- Use prettier
-		"cssls", -- Use prettier
-		"luals", -- Use stylua
-		"pyright", -- Use isort & black
-		"yamlls", -- Use Prettier
-		"marksman", -- use Prettier
-		"jsonls", -- use Prettier
+		"ts_ls",
+		"html",
+		"cssls",
+		"luals",
+		"pyright",
+		"yamlls",
+		"marksman",
+		"jsonls",
 	}
 
 	if vim.tbl_contains(exclude_formatting, client.name) then
