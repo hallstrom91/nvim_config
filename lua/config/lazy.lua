@@ -63,7 +63,7 @@ vim.o.foldcolumn = "1"
 ------------------------
 -- Disable providers
 ------------------------
-vim.g.loaded_node_provider = 1
+vim.g.loaded_node_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
@@ -75,9 +75,13 @@ require("lazy").setup({
 	spec = {
 		{ import = "plugins" },
 	},
-	-- Configure any other settings here. See the documentation for more details.
-	-- colorscheme that will be used when installing plugins.
 	install = { colorscheme = { "habamax" } },
 	-- automatically check for plugin updates
 	checker = { enabled = true },
+	opts = {
+		rocks = {
+			enabled = false, -- disable luarocks (still gives error in checkhealth)
+			hererocks = false, -- disable hererocks (still gives error in checkhealth)
+		},
+	},
 })

@@ -1,9 +1,7 @@
-require("luasnip.loaders.from_vscode").lazy_load()
-local ls = require("luasnip")
+require("luasnip").config.set_config({
+	enable_autosnippets = true,
+	store_selection_keys = "<Tab>",
+})
 
-ls.snippets = {
-	-- custom lua snippets
-	lua = {
-		ls.parser.parse_snippet("fn", "function $1($2)\n  $0\nend"),
-	},
-}
+require("luasnip.loaders.from_vscode").lazy_load({ paths = "~/.local/share/nvim/lazy/friendly-snippets/" })
+require("luasnip.loaders.from_lua").load({ paths = "~/.config/nvim/lua/snippets/" })

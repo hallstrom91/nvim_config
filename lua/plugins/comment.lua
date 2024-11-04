@@ -1,7 +1,15 @@
 return {
 	"numToStr/Comment.nvim",
-	keys = { "gcc", "gc", "gb" }, -- 'gcc' för att kommentera en rad, 'gc' för block, 'gb' för blockkommentarer
 	config = function()
-		require("Comment").setup()
+		require("Comment").setup({
+			toggler = {
+				line = "gcc", -- comment for one row
+				block = "gbb", -- block comment for marked rows
+			},
+			opleader = {
+				line = "gc", -- comment on or several rows
+				block = "gb", -- block comment for marked rows
+			},
+		})
 	end,
 }

@@ -2,6 +2,8 @@ vim.fn.sign_define("DiagnosticSignError", { text = " ", texthl = "DiagnosticS
 vim.fn.sign_define("DiagnosticSignWarn", { text = " ", texthl = "DiagnosticSignWarn" })
 vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSignInfo" })
 vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
+local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
 
 require("neo-tree").setup({
 	-- General settings
@@ -90,9 +92,10 @@ require("neo-tree").setup({
 	},
 
 	-- Additional custom mappings
-	mappings = {
-		["a"] = "add", -- Press 'a' to add new file or folder
-		["C"] = "create", -- Press 'C' to create a new file/folder
-		["<C-n>"] = "create", -- Ctrl+n to create a new file or folder
-	},
+	-- mappings = {
+	-- 	["a"] = "add", -- Press 'a' to add new file or folder
+	-- },
 }) -- End of Neo-tree setup
+
+-- Ctrl + n: Toggle Neo-tree file explorer
+map("n", "<C-n>", ":Neotree toggle reveal_force_cwd=true<CR>", opts)

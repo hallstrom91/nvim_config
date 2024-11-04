@@ -7,7 +7,7 @@ return {
 	},
 	-- install jsregexp (optional!).
 	build = "make install_jsregexp",
-	event = { "InsertEnter", "BufRead" },
+	event = { "InsertEnter" },
 	config = function()
 		require("config.luasnip")
 	end,

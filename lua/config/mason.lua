@@ -6,4 +6,5 @@ require("mason").setup({
 			package_uninstalled = " ",
 		},
 	},
+	ensured_installed = { "pip" }, -- for python
 })

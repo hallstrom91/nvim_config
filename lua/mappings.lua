@@ -70,9 +70,9 @@ map("v", "<C-a>", "ggVG", opts)
 --- Plugin binds
 ------------------------
 
--- Ctrl + n: Toggle Neo-tree file explorer
-map("n", "<C-n>", ":Neotree toggle position=right reveal_force_cwd=true<CR>", opts)
--- space + b: Toggle Neo-tree to show buffers on the right
-map("n", "<leader>b", ":Neotree toggle show buffers right<CR>", opts)
--- space + s: Show git status in Neo-tree
-map("n", "<leader>s", ":Neotree float git_status<CR>", opts)
+-- -- Ctrl + n: Toggle Neo-tree file explorer
+-- map("n", "<C-n>", ":Neotree toggle position=right reveal_force_cwd=true<CR>", opts)
+-- -- space + b: Toggle Neo-tree to show buffers on the right
+-- map("n", "<leader>b", ":Neotree toggle show buffers right<CR>", opts)
+-- -- space + s: Show git status in Neo-tree
+-- map("n", "<leader>s", ":Neotree float git_status<CR>", opts)

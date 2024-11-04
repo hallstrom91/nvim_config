@@ -16,4 +16,5 @@ require("mason-lspconfig").setup({
 		"bashls",
 		"jsonls",
 	},
+	automatic_installation = true, -- Install LSP servers
 })

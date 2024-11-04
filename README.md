@@ -125,6 +125,55 @@ fc-cache -fv
 
 ## Plugin Binds
 
+**NeoTree File Explorer**
+
 - Toggle Neo-Tree File Explorer: `Ctrl + n`
 - Toggle Neo-tree to show buffers: `Space + b`
 - Show Git Status in Neo-Tree: `Space + s`
+
+**NeoTree Move Files (default ntree binds)**
+
+- Details - press: `i`
+- Cut - Select file/folder: `x`
+- Copy - Select file/folder: `c`
+- Paste - Select destination: `p`
+- Rename - Select file/folder: `r`
+- Delete - select file/folder: `d`
+- Refresh - press: `R`
+- Help - press: `?`
+
+**Search in folders and files**
+
+- Open Telescope Searchbox (in neo-tree menu): `space + f`
+- Open Search inside of file: `shift + 7`
+
+**Quick Comment**
+
+- One line comment: `gc`
+- Block comment: `gb`
+
+**Move Files**
+
+- View more bindings by pressing `g`
+
+# Tips N Tricks
+
+**Open NeoVim Terminal with** `shift + ;`
+
+## Plugin Health
+
+- Open information about plugins etc: `checkhealth`
+
+## Commands for LSP
+
+- Stop specific Lsp : `LspStop servername`
+- Start specific Lsp: `LspStart servername`
+
+# Use Tailwindcss LSP or css_variables LSP
+
+- If you want to use Tailwind LSP: `LspStart tailwindcss`
+- If you want to use css_variables LSP: `LspStart css_variables`
+
+## Commands for CMP
+
+- Lazy reload of cmp: `Lazy reload cmp-nvim-lsp`

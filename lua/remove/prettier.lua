@@ -1,4 +1,4 @@
-require("prettier").setup({
+--[[ require("prettier").setup({
 	bin = "prettier", -- Install Prettier via npm and -g flag / or use prettierd (v.0.20.3+)
 	filetypes = {
 		"css",
@@ -14,4 +14,4 @@ require("prettier").setup({
 		"typescriptreact",
 		"yaml",
 	},
-})
+}) ]]

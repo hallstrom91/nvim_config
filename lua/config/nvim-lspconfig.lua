@@ -11,7 +11,12 @@ ufo_capabilities.textDocument.foldingRange = {
 
 init_capabilities = vim.tbl_deep_extend("keep", init_capabilities, ufo_capabilities)
 
--- List of LSP servers
+-- List of LSP servers - Manual start
+local manual_servers = {
+	"tailwindcss",
+	"css_variables",
+}
+-- List of LSP servers - Auto start @ correct filetype
 local servers = {
 	-- Typescript & JavaScript
 	ts_ls = {
@@ -46,16 +51,7 @@ local servers = {
 		},
 		filetypes = { "lua" },
 	},
-	-- Tailwindcss
-	tailwindcss = {
-		filetypes = {
-			"html",
-			"css",
-			"scss",
-			"javascriptreact",
-			"typescriptreact",
-		},
-	},
+
 	-- Markdown (github readme etc)
 	marksman = {
 		filetypes = { "markdown" },
@@ -91,14 +87,7 @@ local servers = {
 		},
 		camelCase = true,
 	},
-	-- CSS Variables
-	css_variables = {
-		filetypes = {
-			"css",
-			"scss",
-			"less",
-		},
-	},
+
 	-- Bash (.sh -files)
 	bashls = {
 		filetypes = { "sh", "bash" },
@@ -107,14 +96,6 @@ local servers = {
 	jsonls = {
 		filetypes = { "json" },
 		schemas = {
-			{
-				fileMatch = { "package.json" },
-				url = "https://json.schemastore.org/package.json",
-			},
-			{
-				fileMatch = { "tsconfig*.json" },
-				url = "https://json.schemastore.org/tsconfig.json",
-			},
 			{
 				fileMatch = { ".prettierrc", ".prettierrc.json", "prettier.config.json" },
 				url = "https://json.schemastore.org/prettierrc.json",
@@ -150,7 +131,7 @@ local on_attach = function(client, bufnr)
 	end
 end
 
--- Loop servers
+-- Auto start LSP servers
 for server, config in pairs(servers) do
 	lspconfig[server].setup(vim.tbl_deep_extend("force", {
 		on_attach = on_attach,
@@ -158,3 +139,31 @@ for server, config in pairs(servers) do
 		flags = lsp_flags,
 	}, config))
 end
+
+-- Manual start for specific LSP server
+vim.api.nvim_create_user_command("StartLsp", function(opts)
+	local server_name = opts.args
+	if lspconfig[server_name] then
+		lspconfig[server_name].setup({
+			on_attach = on_attach,
+			capabilities = init_capabilities,
+			flags = lsp_flags,
+		})
+		print("Started LSP server for " .. server_name)
+	else
+		print("LSP server " .. server_name .. " is not configured.")
+	end
+end, {
+	nargs = 1,
+	complete = function()
+		return manual_servers
+	end,
+})
+
+-- Restart All LSP servers and CMP
+vim.api.nvim_create_user_command("RestartLsp", function()
+	vim.cmd("LspStop")
+	vim.cmd("LspStart")
+	require("cmp").setup()
+	print("All LSP servers and cmp restarted!")
+end, {})
