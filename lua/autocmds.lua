@@ -12,10 +12,19 @@ vim.api.nvim_create_autocmd("FileType", {
 	command = "wincmd L",
 })
 
--- vim.api.nvim_create_autocmd("VimEnter", {
--- 	callback = function()
--- 		require("lazy").sync({
--- 			show = false,
--- 		})
--- 	end,
--- })
+-- auto update plugins at start
+
+local function augroup(name)
+	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
+end
+
+vim.api.nvim_create_autocmd("VimEnter", {
+	group = augroup("autoupdate"),
+	callback = function()
+		vim.defer_fn(function()
+			if require("lazy.status").has_updates() then
+				require("lazy").update({ show = false })
+			end
+		end, 1000) -- 1000 ms delay at startup
+	end,
+})

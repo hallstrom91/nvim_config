@@ -66,13 +66,15 @@ map("n", "<C-a>", "ggVG", opts)
 map("i", "<C-a>", "<Esc>ggVG", opts)
 map("v", "<C-a>", "ggVG", opts)
 
-------------------------
---- Plugin binds
-------------------------
+-- resize buffer windows
+map("n", "<C-Up>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
+map("n", "<C-Down>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
+map("n", "<C-Left>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
+map("n", "<C-Right>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
 
--- -- Ctrl + n: Toggle Neo-tree file explorer
--- map("n", "<C-n>", ":Neotree toggle position=right reveal_force_cwd=true<CR>", opts)
--- -- space + b: Toggle Neo-tree to show buffers on the right
--- map("n", "<leader>b", ":Neotree toggle show buffers right<CR>", opts)
--- -- space + s: Show git status in Neo-tree
--- map("n", "<leader>s", ":Neotree float git_status<CR>", opts)
+-- Split buffer windows
+map("n", "<leader><Down>", "<C-W>s", { desc = "Horizontal Split Below", remap = true })
+map("n", "<leader><Up>", ":split<CR>", { desc = "Horizontal Split Above", remap = true })
+map("n", "<leader><Right>", "<C-W>v", { desc = "Vertical Split Right", remap = true })
+map("n", "<leader><Left>", ":vsplit<CR>", { desc = "Vertical Split Left", remap = true })
+map("n", "<leader>q", "<C-W>c", { desc = "Close Window", remap = true })
