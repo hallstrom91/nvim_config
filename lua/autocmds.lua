@@ -28,3 +28,14 @@ vim.api.nvim_create_autocmd("VimEnter", {
 		end, 1000) -- 1000 ms delay at startup
 	end,
 })
+
+-- Spell checker
+-- vim.api.nvim_create_autocmd("FileType", {
+-- 	pattern = { "javascript" },
+-- 	callback = function()
+-- 		vim.opt_local.spell = true
+-- 		vim.opt_local.spellang = "en_us"
+-- 		vim.opt_local.spelloptions = "camel"
+-- 		vim.opt_local.spellcapcheck = ""
+-- 	end,
+-- })

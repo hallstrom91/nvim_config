@@ -3,6 +3,7 @@ local init_capabilities = vim.lsp.protocol.make_client_capabilities()
 init_capabilities = require("cmp_nvim_lsp").default_capabilities(init_capabilities)
 local ufo_capabilities = vim.lsp.protocol.make_client_capabilities()
 local lsp_flags = { debounce_text_changes = 150 }
+local util = require("lspconfig.util")
 
 ufo_capabilities.textDocument.foldingRange = {
 	dynamicRegistration = false,
@@ -20,12 +21,20 @@ local manual_servers = {
 local servers = {
 	-- Typescript & JavaScript
 	ts_ls = {
+		root_dir = util.root_pattern("tsconfig.json", "jsconfig.json", "package.json", ".git"),
 		settings = {
 			cmd = { "typescript-language-server", "--stdio" },
 			completions = {
 				completeFunctionCalls = true,
 			},
-			filetypes = { "typescript", "typescriptreact", "tsx", "javascript", "javascriptreact", "jsx", "js" },
+			filetypes = {
+				"javascript",
+				"javascriptreact",
+				"javascript.jsx",
+				"typescript",
+				"typescriptreact",
+				"typescript.tsx",
+			},
 		},
 	},
 	-- CSS
@@ -51,7 +60,6 @@ local servers = {
 		},
 		filetypes = { "lua" },
 	},
-
 	-- Markdown (github readme etc)
 	marksman = {
 		filetypes = { "markdown" },
@@ -128,6 +136,7 @@ local on_attach = function(client, bufnr)
 
 	if vim.tbl_contains(exclude_formatting, client.name) then
 		client.server_capabilities.documentFormattingProvider = false
+		client.server_capabilities.document_range_formatting = false
 	end
 end
 

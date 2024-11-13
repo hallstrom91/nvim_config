@@ -20,9 +20,19 @@ cmp.setup({
 			return vim_item
 		end,
 	},
-
 	performance = {
-		max_view_entries = 10, -- show max 10 suggestions in CMP list
+		max_view_entries = 15, -- show max 15 suggestions in CMP list
+	},
+	-- testing layout config window
+	window = {
+		completion = {
+			border = "rounded",
+			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+		},
+		documentation = {
+			border = "rounded",
+			winhighlight = "Normal:Pmenu,FloatBorder:Pmenu,Search:None",
+		},
 	},
 
 	mapping = {
@@ -83,3 +93,10 @@ cmp.setup({
 		},
 	}),
 })
+
+vim.cmd([[
+highlight Pmenu guibg=#2E3440 guifg=#D8DEE9
+highlight PmenuSel guibg=#4C566A guifg=#D8DEE9
+highlight PmenuSbar guibg=#3B4252
+highlight PmenuThumb guibg=#4C566A
+]])
