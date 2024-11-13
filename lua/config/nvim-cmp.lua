@@ -79,13 +79,13 @@ cmp.setup({
 			name = "dotenv",
 			option = {
 				path = ".",
-				load_shell = true,
+				load_shell = false,
 				item_kind = cmp.lsp.CompletionItemKind.Variable,
 				eval_on_confirm = false,
 				show_documentation = true,
 				show_content_on_docs = true,
 				documentation_kind = "markdown",
-				dotenv_environment = ".*",
+				dotenv_environment = "^%.env.*$", -- all env-files in project
 				file_priority = function(a, b)
 					return a:upper() < b:upper()
 				end,

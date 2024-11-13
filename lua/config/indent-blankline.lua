@@ -22,6 +22,9 @@ hooks.register(hooks.type.HIGHLIGHT_SETUP, function()
 end)
 
 require("ibl").setup({
-	indent = { highlight = highlight, char = "" },
-	scope = { highlight = highlight, enabled = true },
+	indent = { highlight = highlight, char = "󰇙" },
+	scope = { highlight = highlight, enabled = true, char = "" },
 })
+
+-- indent char = "" or "" or "󰇙"
+-- scope char = "" or "󰞷" or "󰇘"

@@ -8,7 +8,7 @@ local opts = { noremap = true, silent = true }
 require("neo-tree").setup({
 	-- General settings
 	close_if_last_window = false, -- Close Neo-tree if it's the last window open
-	popup_border_style = "rounded", -- Border style for popups (rounded, single, double)
+	popup_border_style = "double", -- Border style for popups (rounded, single, double)
 	enable_git_status = true, -- Enable git status integration
 	enable_diagnostics = true, -- Enable diagnostics (e.g., linting info)
 
