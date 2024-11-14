@@ -25,6 +25,7 @@ require("neo-tree").setup({
 			always_show = { -- Always show these items
 				".gitignored",
 				"node_modules",
+				"*.log",
 			},
 			always_show_by_pattern = { -- Always show items matching these patterns
 				".env*",
