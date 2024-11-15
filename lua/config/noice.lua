@@ -10,10 +10,10 @@ require("noice").setup({
 		},
 	},
 	presets = {
-		bottom_search = true, -- false for optimal performance
-		command_palette = true, -- false for optimal performance
+		bottom_search = false,
+		command_palette = false,
 		long_message_to_split = true,
 		inc_rename = false,
-		lsp_doc_border = true,
+		lsp_doc_border = false,
 	},
 })
