@@ -100,8 +100,11 @@ fc-cache -fv
 
 ## Clipboard Operations
 
-- Copy (works in all modes): `Ctrl + c`
-- Paste: `Ctrl + v`
+- Copy: `Ctrl&shift + c` or `y`
+- Paste: `Ctrl&shift + v` or click `mouse scroll` or `p`
+
+## Save Changes
+
 - Save: `Ctrl + s`
 
 ## Text Navigation
@@ -111,12 +114,14 @@ fc-cache -fv
 
 ## Undo
 
-- Undo: `Ctrl + z`
+- in normal mode: `u`
+- or use command `:undolist` - gives a list an run command `:undo {number}`
+- Undid to much? Press `ctrl+r` to revert
 
-## Backspace
+## Delete
 
-- Delete Character (Insert Mode): `Backspace`
-- Delete Selected Text (Visual Mode): `Backspace`
+- in normal mode: `d` - removes current line, or marked text.
+- remove one char at marker - `x` or remove before marker `X`
 
 ## Text Selection
 
@@ -124,6 +129,16 @@ fc-cache -fv
 - Select ALL text: `Ctrl + a`
 
 ## Plugin Binds
+
+**CMP Suggestions**
+
+- Navigate Down (next item): `tab` or `ctrl+p`
+- Navigate Up (prev item): `shift+tab` or `ctrl+n`
+- Scroll in cmp docs: `ctrl+d`
+- Scroll in cmp docs: `ctrl+f`
+- Complete: `ctrl+space`
+- Close suggestions `ctrl+e`
+- Select import suggestions `enter`
 
 **NeoTree File Explorer**
 
@@ -144,7 +159,12 @@ fc-cache -fv
 
 **Search in folders and files**
 
-- Open Telescope Searchbox (in neo-tree menu): `space + f`
+- Open File Search (in neo-tree menu): `space + f`
+- Open Telescope Live Grep: `space + fg`
+- Open Telescope Find Files: `space + ff`
+- Open Telescope Buffers: `space + fb`
+- Open Telescope Recent files: `space + fr`
+
 - Open Search inside of file: `shift + 7`
 
 **Quick Comment**
@@ -154,7 +174,8 @@ fc-cache -fv
 
 **Move Files**
 
-- View more bindings by pressing `g`
+- View more bindings by pressing `space`, shows all keybinds.
+- or use binded key like: `g`, `c`, `z` or in cmdline `WhichKey`
 
 # Tips N Tricks
 

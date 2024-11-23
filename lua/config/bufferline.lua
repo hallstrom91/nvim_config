@@ -4,7 +4,7 @@ require("bufferline").setup({
 		style_preset = require("bufferline").style_preset.default, -- or use minimal
 		themable = true, -- allow highlight overrides
 		numbers = "ordinal", -- show buffer numbers (can be "none", "ordinal", "buffer_id", or "both")
-
+		diagnostics = "nvim_lsp", -- show diagnostics in buffer tab
 		close_command = "bdelete! %d", -- close buffer with bdelete
 		right_mouse_command = "bdelete! %d", -- close buffer with right-click
 		left_mouse_command = "buffer %d", -- switch to buffer with left-click
@@ -32,3 +32,6 @@ require("bufferline").setup({
 		always_show_bufferline = true, -- always show bufferline even with one buffer open
 	},
 })
+
+vim.keymap.set("n", "<Tab>", ":BufferLineCycleNext<CR>", { desc = "Next buffer" })
+vim.keymap.set("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { desc = "Prev buffer" })

@@ -3,7 +3,7 @@ return {
 	dependencies = { "neovim/nvim-lspconfig" },
 	config = function()
 		vim.g.lspTimeoutConfig = {
-			stopTimeout = 1000 * 60 * 15, -- 10min until LSP shutdown for buffer
+			stopTimeout = 1000 * 60 * 25, -- 10min until LSP shutdown for buffer
 			startTimeout = 1000 * 5, -- 5s to restart LSP for buffer
 			silent = false, -- Get notifications if deactivated / activated
 			filetypes = {

@@ -2,6 +2,16 @@ local cmp = require("cmp")
 local tailwind_formatter = require("tailwindcss-colorizer-cmp").formatter
 local lspkind = require("lspkind")
 
+local source_mapping = {
+	nvim_lsp = "[LSP]",
+	nvim_lua = "[LUA]",
+	luasnip = "[SNIP]",
+	buffer = "[BUF]",
+	path = "[PATH]",
+	treesitter = "[TREE]",
+	--	["vim-dadbod-completion"] = "[DB]",
+}
+
 cmp.setup({
 	snippet = {
 		expand = function(args)
@@ -10,20 +20,25 @@ cmp.setup({
 	},
 	formatting = {
 		format = function(entry, vim_item)
+			-- tailwind formatter
 			vim_item = tailwind_formatter(entry, vim_item)
+
 			-- show icons from lspkind
 			vim_item = lspkind.cmp_format({
 				mode = "symbol_text",
 				maxwidth = 50,
 				ellipsis_char = "...",
 			})(entry, vim_item)
+
+			vim_item.abbr = vim_item.abbr:gsub("%$%d", "") -- test to remove () from imports
+
+			vim_item.menu = source_mapping[entry.source.name] or ""
 			return vim_item
 		end,
 	},
 	performance = {
 		max_view_entries = 15, -- show max 15 suggestions in CMP list
 	},
-	-- testing layout config window
 	window = {
 		completion = {
 			border = "rounded",
@@ -74,7 +89,9 @@ cmp.setup({
 		{ name = "luasnip" },
 		{ name = "buffer" },
 		{ name = "nvim_lua" },
-		{ name = "path" },
+		-- {
+		-- 	name = "path",
+		-- },
 		{
 			name = "dotenv",
 			option = {
@@ -92,6 +109,29 @@ cmp.setup({
 			},
 		},
 	}),
+	completion = {
+		autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged }, -- Trigger only after typing
+		completeopt = "menu,menuone,noinsert", -- No preselection of first item
+	},
+})
+
+-- for ":" (cmdline)
+cmp.setup.cmdline(":", {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({
+		{ name = "path" },
+	}, {
+		{ name = "cmdline" },
+	}),
+	matching = { disallow_symbol_nonprefix_matching = false },
+})
+
+-- For `/` (search)
+cmp.setup.cmdline("/", {
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = {
+		{ name = "buffer" },
+	},
 })
 
 vim.cmd([[

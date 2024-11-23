@@ -17,13 +17,6 @@ map("n", "<C-s>", "<cmd> w <cr>", opts)
 map("i", "<C-s>", "<cmd> w <cr><cmd> stopinsert <cr>", opts)
 map("v", "<C-s>", "<cmd> w <cr><cmd> stopinsert <cr>", opts)
 
--- Paste in Normal mode
-map("n", "<C-v>", '"+p', opts)
--- Paste in Visual mode (replace selected text with clipboard content)
-map("v", "<C-v>", '"+p', opts)
--- Paste in Insert mode
-map("i", "<C-v>", "<C-r>+", opts)
-
 ----- Move row UP  with Alt+Up-arrowkey
 map("n", "<A-Up>", ":m .-2<CR>==", opts)
 map("i", "<A-Up>", "<Esc>:m .-2<CR>==gi", opts)
@@ -33,15 +26,6 @@ map("v", "<A-Up>", ":m '<-2<CR>gv=gv", opts)
 map("n", "<A-Down>", ":m .+1<CR>==", opts)
 map("i", "<A-Down>", "<Esc>:m .+1<CR>==gi", opts)
 map("v", "<A-Down>", ":m '>+1<CR>gv=gv", opts)
-
--- Regret with Ctrl + Z
-map("n", "<C-z>", "u", opts)
-map("i", "<C-z>", "<C-o>u", opts)
-
--- Allow backspace in Insert mode
-map("i", "<BS>", "<BS>", opts)
--- Allow backspace in Visual mode (delete selected text)
-map("v", "<BS>", '"_d', opts)
 
 -- Shift + Arrow keys for text selection in normal mode
 map("n", "<S-Left>", "v<Left>", opts)
@@ -78,3 +62,22 @@ map("n", "<leader><Up>", ":split<CR>", { desc = "Horizontal Split Above", remap 
 map("n", "<leader><Right>", "<C-W>v", { desc = "Vertical Split Right", remap = true })
 map("n", "<leader><Left>", ":vsplit<CR>", { desc = "Vertical Split Left", remap = true })
 map("n", "<leader>q", "<C-W>c", { desc = "Close Window", remap = true })
+
+vim.api.nvim_command("autocmd RecordingEnter * echo 'Recording macro...'")
+vim.api.nvim_command("autocmd RecordingLeave * echo 'Stopped recording.'")
+
+-- Paste in Normal mode
+--map("n", "<C-v>", '"+p', opts)
+-- Paste in Visual mode (replace selected text with clipboard content)
+--map("v", "<C-v>", '"+p', opts)
+-- Paste in Insert mode
+--map("i", "<C-v>", "<C-r>+", opts)
+
+--map("n", "<C-z>", "u", opts)
+--map("i", "<C-z>", "<C-o>u", opts)
+
+-- Regret with Ctrl + Z
+-- Allow backspace to remove in Insert mode
+--map("i", "<BS>", "<BS>", opts)
+-- Allow backspace in Visual mode (delete selected text)
+--map("v", "<BS>", '"_d', opts)
