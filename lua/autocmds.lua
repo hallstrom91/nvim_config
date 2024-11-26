@@ -28,3 +28,17 @@ vim.api.nvim_create_autocmd("VimEnter", {
 		end, 1000) -- 1000 ms delay at startup
 	end,
 })
+
+-- Auto update installs from mason
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		vim.cmd("MasonUpdate")
+	end,
+})
+
+-- Auto update Treesitter Parser
+vim.api.nvim_create_autocmd("VimEnter", {
+	callback = function()
+		vim.cmd("TSUpdate")
+	end,
+})

@@ -13,12 +13,12 @@ local source_mapping = {
 }
 
 cmp.setup({
-	snippet = {
+snippet = {
 		expand = function(args)
 			require("luasnip").lsp_expand(args.body) -- LuaSnip
 		end,
 	},
-	formatting = {
+    formatting = {
 		format = function(entry, vim_item)
 			-- tailwind formatter
 			vim_item = tailwind_formatter(entry, vim_item)
@@ -89,9 +89,6 @@ cmp.setup({
 		{ name = "luasnip" },
 		{ name = "buffer" },
 		{ name = "nvim_lua" },
-		-- {
-		-- 	name = "path",
-		-- },
 		{
 			name = "dotenv",
 			option = {

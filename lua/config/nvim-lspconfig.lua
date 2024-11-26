@@ -50,7 +50,32 @@ local servers = {
 	-- Python
 	pyright = { filetypes = { "python" } },
 	-- Lua
-	lua_ls = {
+--[[ 	lua_ls = {
+		settings = {
+			Lua = {
+				runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
+				diagnostics = {
+					globals = { "vim" },
+                    -- disable = {"undefined-field"}, 
+				},
+				workspace = {
+					library = {
+                        -- vim.env.VIMRUNTIME,
+						[vim.fn.stdpath("config") .. "/lua"] = true,
+						[vim.fn.stdpath("data") .. "/lazy"] = true,
+					},
+					maxPreload = 200,
+					preloadFileSize = 500,
+                    checkThirdParty = false,
+				},
+				telemetry = { enable = false },
+				completion = { enable = true, callSnippet = "Replace" },
+			},
+		},
+		filetypes = { "lua" },
+	}, ]]
+
+ 	lua_ls = {
 		settings = {
 			Lua = {
 				diagnostics = {

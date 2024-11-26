@@ -114,6 +114,19 @@ require("neo-tree").setup({
 			leave_dirs_open = false, -- Close directories when switching buffers
 		},
 	}, -- End of Buffer management
+            event_handlers = {
+
+          {
+            event = "file_open_requested",
+            handler = function()
+              -- auto close
+              -- vim.cmd("Neotree close")
+              -- OR
+              require("neo-tree.command").execute({ action = "close" })
+            end
+          },
+
+        },
 })
 
 -- Ctrl + n: Toggle Neo-tree file explorer

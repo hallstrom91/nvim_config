@@ -179,7 +179,8 @@ fc-cache -fv
 
 # Tips N Tricks
 
-**Open NeoVim Terminal with** `shift + ;`
+**Open NeoVim Terminal with**: `shift + ;`
+**Open URL**: Mark URL and press `gx`
 
 ## Plugin Health
 

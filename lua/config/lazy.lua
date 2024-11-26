@@ -58,8 +58,10 @@ vim.o.foldenable = true -- enable folding
 vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 vim.o.foldcolumn = "1"
+
 --vim.o.foldmethod = "expr"
 --vim.o.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.clipboard = "unnamedplus" -- sync clipboard actions with system clipboard
 ------------------------
 -- Disable providers
 ------------------------
@@ -85,11 +87,3 @@ require("lazy").setup({
 		},
 	},
 })
-
--- vim.api.nvim_create_autocmd("VimEnter", {
--- 	callback = function()
--- 		require("lazy").sync({
--- 			show = false,
--- 		})
--- 	end,
--- })
