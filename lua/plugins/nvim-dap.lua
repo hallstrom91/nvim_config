@@ -8,6 +8,7 @@ return {
 			"nvim-lua/plenary.nvim",
 			"nvim-neotest/nvim-nio",
 		},
+		lazy = true, -- lazyload
 		config = function()
 			require("config.nvim-dap")
 		end,

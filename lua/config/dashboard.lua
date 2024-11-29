@@ -1,7 +1,7 @@
 local api = vim.api
 local keymap = vim.keymap
 local dashboard = require("dashboard")
-local actual_startuptime = nil
+
 
 local function load_imgs(file)
 	local success, header = pcall(require, "themes.dash-headers." .. file)
@@ -12,9 +12,16 @@ local function load_imgs(file)
 	end
 end
 
+local function open_link(link)
+    vim.fn.jobstart({"xdg-open", link}, {detach = true}) -- For Linux
+    -- vim.fn.jobstart({"open", link}, {detach = true}) -- For macOS
+    -- vim.fn.jobstart({"start", link}, {detach = true}) -- For Windows
+end
+
 -- Load header ASCII image by filename
-local selected_header = "dash_nvim"
--- local selected_footer = "dash_simon"
+--local selected_header = "dash_nvim"
+local selected_header = "dash_neovim"
+
 
 local conf = {}
 
@@ -46,9 +53,16 @@ conf.center = {
 		action = "Telescope buffers",
 		key = "<Leader> f b",
 	},
+--[[ 	{
+		icon = "  ",
+		desc = "Select Theme                            ",
+        action = "Telescope themes",
+		key = "<Leader> th",
+	}, ]]
 	{
 		icon = "󰍜  ",
 		desc = "Open NeoTree Menu                        ",
+        action = "Neotree toggle reveal_force_cwd=true",
 		key = "CTRL n",
 	},
 	{
@@ -59,9 +73,13 @@ conf.center = {
 	},
 	{
 		icon = "  ",
+        action = function ()
+            open_link("https://github.com/hallstrom91/nvim_config")
+        end,
 		desc = "https://github.com/hallstrom91/nvim_config",
 	},
 }
+
 -- conf.footer = load_imgs(selected_footer)
 
 dashboard.setup({

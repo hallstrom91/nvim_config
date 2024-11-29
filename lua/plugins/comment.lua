@@ -1,5 +1,10 @@
 return {
 	"numToStr/Comment.nvim",
+	lazy = true, -- Gör Comment.nvim lazy-laddad
+	keys = {
+		{ "gc", mode = { "n", "v" }, desc = "Toggle comment (line)" },
+		{ "gb", mode = { "n", "v" }, desc = "Toggle comment (block)" },
+	},
 	config = function()
 		require("Comment").setup({
 			toggler = {

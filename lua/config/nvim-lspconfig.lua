@@ -1,22 +1,29 @@
 local lspconfig = require("lspconfig")
-local init_capabilities = vim.lsp.protocol.make_client_capabilities()
-init_capabilities = require("cmp_nvim_lsp").default_capabilities(init_capabilities)
-local ufo_capabilities = vim.lsp.protocol.make_client_capabilities()
-local lsp_flags = { debounce_text_changes = 150 }
 local util = require("lspconfig.util")
 
-ufo_capabilities.textDocument.foldingRange = {
-	dynamicRegistration = false,
-	lineFoldingOnly = true,
-}
+-- LSP Capabilities
+local init_capabilities = vim.lsp.protocol.make_client_capabilities()
+local ufo_capabilities = vim.lsp.protocol.make_client_capabilities()
 
+-- CMP & UFO
+init_capabilities = require("cmp_nvim_lsp").default_capabilities(init_capabilities)
+ufo_capabilities.textDocument.foldingRange = {
+    dynamicRegistration = false,
+    lineFoldingOnly = true,
+}
 init_capabilities = vim.tbl_deep_extend("keep", init_capabilities, ufo_capabilities)
 
--- List of LSP servers - Manual start
+-- LSP Flags
+local lsp_flags = { debounce_text_changes = 150 }
+
+
+
+-- List of LSP servers - Manual start required 
 local manual_servers = {
 	"tailwindcss",
 	"css_variables",
 }
+
 -- List of LSP servers - Auto start @ correct filetype
 local servers = {
 	-- Typescript & JavaScript

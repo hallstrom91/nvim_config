@@ -87,7 +87,12 @@ snippet = {
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
-		{ name = "buffer" },
+		{ name = "buffer", option = {
+            get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+            end,
+            keyword_length = 3, 
+        }, },
 		{ name = "nvim_lua" },
 		{
 			name = "dotenv",
@@ -118,7 +123,7 @@ cmp.setup.cmdline(":", {
 	sources = cmp.config.sources({
 		{ name = "path" },
 	}, {
-		{ name = "cmdline" },
+		{ name = "cmdline" ,keyword_length = 2 },
 	}),
 	matching = { disallow_symbol_nonprefix_matching = false },
 })
@@ -131,9 +136,16 @@ cmp.setup.cmdline("/", {
 	},
 })
 
-vim.cmd([[
-highlight Pmenu guibg=#2E3440 guifg=#D8DEE9
-highlight PmenuSel guibg=#4C566A guifg=#D8DEE9
-highlight PmenuSbar guibg=#3B4252
-highlight PmenuThumb guibg=#4C566A
-]])
+-- vim.cmd([[
+-- highlight Pmenu guibg=#2E3440 guifg=#D8DEE9
+-- highlight PmenuSel guibg=#4C566A guifg=#D8DEE9
+-- highlight PmenuSbar guibg=#3B4252
+-- highlight PmenuThumb guibg=#4C566A
+-- ]])
+--
+
+
+vim.api.nvim_set_hl(0, "Pmenu", { bg = "#2E3440", fg = "#D8DEE9" })
+vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#4C566A", fg = "#D8DEE9" })
+vim.api.nvim_set_hl(0, "PmenuSbar", { bg = "#3B4252" })
+vim.api.nvim_set_hl(0, "PmenuThumb", { bg = "#4C566A" })

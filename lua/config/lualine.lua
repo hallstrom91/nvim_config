@@ -1,9 +1,9 @@
 local mode_icons = {
-	NORMAL = " ", -- Clipboard for Normal
-	INSERT = "󱓥 ", -- Writing icon
-	VISUAL = "󱘣 ", -- Visual icon
-	REPLACE = "󰛈", -- Replacement arrows
-	COMMAND = " ", -- Terminal icon for command mode
+	NORMAL = " ", 
+	INSERT = "󱓥 ", 
+	VISUAL = "󱘣 ", 
+	REPLACE = "󰛈", 
+	COMMAND = " ", 
 }
 
 local function mode_with_icon()

@@ -1,11 +1,12 @@
+local map = vim.keymap.set
 require("bufferline").setup({
 	options = {
 		mode = "buffers", -- show buffers instead of tabs
-		style_preset = require("bufferline").style_preset.default, -- or use minimal
-		themable = true, -- allow highlight overrides
-		numbers = "ordinal", -- show buffer numbers (can be "none", "ordinal", "buffer_id", or "both")
-		diagnostics = "nvim_lsp", -- show diagnostics in buffer tab
-		close_command = "bdelete! %d", -- close buffer with bdelete
+		style_preset = require("bufferline").style_preset.default,
+		themable = true, 
+		numbers = "ordinal", -- (can be "none", "ordinal", "buffer_id", or "both")
+		diagnostics = "nvim_lsp",
+		close_command = "bdelete! %d",
 		right_mouse_command = "bdelete! %d", -- close buffer with right-click
 		left_mouse_command = "buffer %d", -- switch to buffer with left-click
 		middle_mouse_command = nil, -- no action on middle-click
@@ -33,5 +34,5 @@ require("bufferline").setup({
 	},
 })
 
-vim.keymap.set("n", "<Tab>", ":BufferLineCycleNext<CR>", { desc = "Next buffer" })
-vim.keymap.set("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { desc = "Prev buffer" })
+map("n", "<Tab>", ":BufferLineCycleNext<CR>", { desc = "Next buffer" })
+map("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { desc = "Prev buffer" })
