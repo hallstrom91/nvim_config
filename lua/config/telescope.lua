@@ -1,6 +1,7 @@
 local builtin = require("telescope.builtin")
 local telescope = require("telescope")
-
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
 
 telescope.setup({
 	defaults = {
@@ -31,6 +32,28 @@ telescope.setup({
 			case_mode = "smart_case",
 		},
 	},
+    mappings = {
+appings = {
+      i = {
+        -- Lägg till en custom action för git add
+        ["<C-a>"] = function(prompt_bufnr)
+          local entry = action_state.get_selected_entry()
+          local cmd = "git add " .. entry.value
+          vim.cmd("!" .. cmd)
+          actions.close(prompt_bufnr)
+        end,
+      },
+      n = {
+        -- Samma sak i normal mode
+        ["<C-a>"] = function(prompt_bufnr)
+          local entry = action_state.get_selected_entry()
+          local cmd = "git add " .. entry.value
+          vim.cmd("!" .. cmd)
+          actions.close(prompt_bufnr)
+        end,
+      },
+    },
+    }
 })
 
 require("telescope").load_extension("fzf")

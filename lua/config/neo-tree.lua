@@ -4,6 +4,7 @@ vim.fn.sign_define("DiagnosticSignInfo", { text = " ", texthl = "DiagnosticSi
 vim.fn.sign_define("DiagnosticSignHint", { text = "󰌵", texthl = "DiagnosticSignHint" })
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
+local events = require("neo-tree.events")
 
 require("neo-tree").setup({
 	-- General settings
@@ -105,6 +106,147 @@ require("neo-tree").setup({
 	window = {
 		position = "left", -- Position Neo-tree on the right side of the screen
 		width = 35, -- Set the width of the Neo-tree window
+		-- git commands from fileexplorer menu!
+		mappings = {
+			["<leader>"] = {
+				"toggle_node",
+				nowait = false,
+			},
+			["ga"] = "git_add_file",
+			["gu"] = "git_unstage_file",
+			-- git delete file
+			--[[ 	["gd"] = function(state)
+				local node = state.tree:get_node()
+				local path = node:get_id()
+
+				vim.ui.input({
+					prompt = "Are you sure you want to remove " .. path .. "? [y/N]: ",
+				}, function(input)
+					if input and input:lower() == "y" then
+						-- run `git rm` command
+						local Job = require("plenary.job")
+						Job:new({
+							command = "git",
+							args = { "rm", path },
+							on_exit = function(_, return_val)
+								if return_val == 0 then
+									print("Removed: " .. path)
+									-- refresh neotree after removal
+									events.fire_event(events.GIT_EVENT)
+								else
+									print("Failed to remove: " .. path)
+								end
+							end,
+						}):start()
+					else
+						print("File removal cancelled.")
+					end
+				end)
+			end, ]]
+
+			-- git delete file and make automatic commit for deleted file
+			["gd"] = function(state)
+				local node = state.tree:get_node()
+				local path = node:get_id()
+
+				vim.ui.input({
+					prompt = "Are you sure you want to remove " .. path .. "? [y/N]: ",
+				}, function(input)
+					if input and input:lower() == "y" then
+						local filename = vim.fn.fnamemodify(path, ":t")
+						-- Kör `git rm`
+						local Job = require("plenary.job")
+						Job:new({
+							command = "git",
+							args = { "rm", path },
+							on_exit = function(_, return_val)
+								if return_val == 0 then
+									print("Removed: " .. path)
+
+									-- Skapa commit-meddelande automatiskt
+									local msg = filename .. " has been terminated by " .. os.getenv("USER")
+
+									-- Kör `git commit -m`
+									Job:new({
+										command = "git",
+										args = { "commit", "-m", msg },
+										on_exit = function(_, commit_val)
+											if commit_val == 0 then
+												print("Commit successful! Message: " .. msg)
+												-- Uppdatera Neo-tree efter commit
+												events.fire_event(events.GIT_EVENT)
+											else
+												print("Commit failed.")
+											end
+										end,
+									}):start()
+								else
+									print("Failed to remove: " .. path)
+								end
+							end,
+						}):start()
+					else
+						print("File removal cancelled.")
+					end
+				end)
+			end,
+			-- git restore file
+			["gr"] = function(state)
+				local node = state.tree:get_node()
+				local path = node:get_id()
+
+				vim.ui.input({
+					prompt = "Are you sure you want to restore " .. path .. "? [y/N]: ",
+				}, function(input)
+					if input and input:lower() == "y" then
+						-- Run `git restore` command
+						local Job = require("plenary.job")
+						Job:new({
+							command = "git",
+							args = { "restore", path },
+							on_exit = function(_, return_val)
+								if return_val == 0 then
+									print("Restored to last commit: " .. path)
+									-- refresh neotree after restore
+									events.fire_event(events.GIT_EVENT)
+								else
+									print("Failed to restore: " .. path)
+								end
+							end,
+						}):start()
+					else
+						print("File restore cancelled.")
+					end
+				end)
+			end,
+			-- git commit file/files and add commit message
+			["gz"] = function(state)
+				-- Öppna en inputruta för commit-meddelandet
+				vim.ui.input({ prompt = "Enter commit message: " }, function(msg)
+					if not msg or msg == "" then
+						print("Commit cancelled.")
+						return
+					end
+
+					-- Kör `git commit -m` med det angivna meddelandet
+					local Job = require("plenary.job")
+					Job:new({
+						command = "git",
+						args = { "commit", "-m", msg },
+						cwd = state.path, -- Sätter arbetskatalogen till den aktuella sökvägen
+						on_exit = function(_, return_val)
+							if return_val == 0 then
+								print("Commit successful! Message: " .. msg)
+								-- Uppdatera Neo-tree automatiskt efter commiten
+								events.fire_event(events.GIT_EVENT)
+							else
+								print("Commit failed.")
+							end
+						end,
+					}):start()
+				end)
+			end,
+		},
 	}, -- End of window settings
 
 	-- Buffer management settings
@@ -114,19 +256,18 @@ require("neo-tree").setup({
 			leave_dirs_open = false, -- Close directories when switching buffers
 		},
 	}, -- End of Buffer management
-            event_handlers = {
+	event_handlers = {
 
-          {
-            event = "file_open_requested",
-            handler = function()
-              -- auto close
-              -- vim.cmd("Neotree close")
-              -- OR
-              require("neo-tree.command").execute({ action = "close" })
-            end
-          },
-
-        },
+		{
+			event = "file_open_requested",
+			handler = function()
+				-- auto close
+				-- vim.cmd("Neotree close")
+				-- OR
+				require("neo-tree.command").execute({ action = "close" })
+			end,
+		},
+	},
 })
 
 -- Ctrl + n: Toggle Neo-tree file explorer

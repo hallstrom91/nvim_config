@@ -1,8 +1,0 @@
-indent_width = 4
-quote_style = "double"
-column_width = 80
-line_endings = "Unix"
-
-[files]
-include = "**/*.lua"
-exclude = "lua/snippets/*"
