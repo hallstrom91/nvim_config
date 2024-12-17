@@ -8,17 +8,15 @@ local ufo_capabilities = vim.lsp.protocol.make_client_capabilities()
 -- CMP & UFO
 init_capabilities = require("cmp_nvim_lsp").default_capabilities(init_capabilities)
 ufo_capabilities.textDocument.foldingRange = {
-    dynamicRegistration = false,
-    lineFoldingOnly = true,
+	dynamicRegistration = false,
+	lineFoldingOnly = true,
 }
 init_capabilities = vim.tbl_deep_extend("keep", init_capabilities, ufo_capabilities)
 
 -- LSP Flags
 local lsp_flags = { debounce_text_changes = 150 }
 
-
-
--- List of LSP servers - Manual start required 
+-- List of LSP servers - Manual start required
 local manual_servers = {
 	"tailwindcss",
 	"css_variables",
@@ -32,7 +30,7 @@ local servers = {
 		settings = {
 			cmd = { "typescript-language-server", "--stdio" },
 			completions = {
-				completeFunctionCalls = true,
+				completeFunctionCalls = false,
 			},
 			filetypes = {
 				"javascript",
@@ -57,7 +55,7 @@ local servers = {
 	-- Python
 	pyright = { filetypes = { "python" } },
 	-- Lua
---[[ 	lua_ls = {
+	--[[ 	lua_ls = {
 		settings = {
 			Lua = {
 				runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
@@ -82,7 +80,7 @@ local servers = {
 		filetypes = { "lua" },
 	}, ]]
 
- 	lua_ls = {
+	lua_ls = {
 		settings = {
 			Lua = {
 				diagnostics = {

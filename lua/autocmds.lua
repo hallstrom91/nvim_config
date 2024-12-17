@@ -42,3 +42,11 @@ vim.api.nvim_create_autocmd("VimEnter", {
 		vim.cmd("TSUpdate")
 	end,
 })
+
+-- deactivate indent-blankline in dashboard
+--[[ vim.api.nvim_create_autocmd("FileType", {
+	pattern = "dashboard",
+	callback = function()
+		vim.b.indent_blankline_enabled = false
+	end,
+}) ]]

@@ -1,6 +1,7 @@
 local cmp = require("cmp")
 local tailwind_formatter = require("tailwindcss-colorizer-cmp").formatter
 local lspkind = require("lspkind")
+local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 
 local source_mapping = {
 	nvim_lsp = "[LSP]",
@@ -13,12 +14,12 @@ local source_mapping = {
 }
 
 cmp.setup({
-snippet = {
+	snippet = {
 		expand = function(args)
 			require("luasnip").lsp_expand(args.body) -- LuaSnip
 		end,
 	},
-    formatting = {
+	formatting = {
 		format = function(entry, vim_item)
 			-- tailwind formatter
 			vim_item = tailwind_formatter(entry, vim_item)
@@ -87,12 +88,15 @@ snippet = {
 	sources = cmp.config.sources({
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
-		{ name = "buffer", option = {
-            get_bufnrs = function()
-                return vim.api.nvim_list_bufs()
-            end,
-            keyword_length = 3, 
-        }, },
+		{
+			name = "buffer",
+			option = {
+				get_bufnrs = function()
+					return vim.api.nvim_list_bufs()
+				end,
+				keyword_length = 3,
+			},
+		},
 		{ name = "nvim_lua" },
 		{
 			name = "dotenv",
@@ -115,7 +119,42 @@ snippet = {
 		autocomplete = { require("cmp.types").cmp.TriggerEvent.TextChanged }, -- Trigger only after typing
 		completeopt = "menu,menuone,noinsert", -- No preselection of first item
 	},
+	experimental = {
+		ghost_text = false,
+	},
 })
+
+-- test
+--[[ cmp.event:on(
+	"confirm_done",
+	cmp_autopairs.on_confirm_done({
+		map_char = {
+			all = "(",
+			typescriptreact = "<",
+			javascriptreact = "<",
+			tex = "",
+		},
+	})
+)
+ ]]
+
+--[[ cmp.event:on("confirm_done", function(event)
+	local entry = event.entry
+	local context = event.context or {}
+	local line = context.cursor_before_line or ""
+
+	print(vim.inspect(event))
+	if line:match("^%s*import%s+{.*") or line:match("^%s*import%s+.*;$") then
+		require("nvim-autopairs.completion.cmp").on_confirm_done({
+			mapchar = {
+				all = "",
+				tex = "",
+			},
+		})(event)
+	else
+		cmp_autopairs.on_confirm_done()(event)
+	end
+end) ]]
 
 -- for ":" (cmdline)
 cmp.setup.cmdline(":", {
@@ -123,7 +162,7 @@ cmp.setup.cmdline(":", {
 	sources = cmp.config.sources({
 		{ name = "path" },
 	}, {
-		{ name = "cmdline" ,keyword_length = 2 },
+		{ name = "cmdline", keyword_length = 2 },
 	}),
 	matching = { disallow_symbol_nonprefix_matching = false },
 })
@@ -143,7 +182,6 @@ cmp.setup.cmdline("/", {
 -- highlight PmenuThumb guibg=#4C566A
 -- ]])
 --
-
 
 vim.api.nvim_set_hl(0, "Pmenu", { bg = "#2E3440", fg = "#D8DEE9" })
 vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#4C566A", fg = "#D8DEE9" })

@@ -31,6 +31,15 @@ vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 vim.o.foldcolumn = "1"
 vim.opt.clipboard = "unnamedplus" -- sync clipboard actions with system clipboard
+--vim.opt.guicursor = "n-v-c-i:ver25" -- changes all cursor markers to thin |
+vim.opt.guicursor = {
+	-- Normal mode: horizontal line _
+	"n-v-c:hor25",
+	-- Insert mode: vertical thin line |
+	"i-ci-ve:ver25",
+	-- Command line - vertical
+	"c:ver25",
+}
 --vim.o.foldmethod = "expr"
 --vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 

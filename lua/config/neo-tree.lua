@@ -104,45 +104,79 @@ require("neo-tree").setup({
 
 	-- Neo-tree window settings
 	window = {
-		position = "left", -- Position Neo-tree on the right side of the screen
-		width = 35, -- Set the width of the Neo-tree window
+		position = "left",
+		width = 40,
+
 		-- git commands from fileexplorer menu!
 		mappings = {
 			["<leader>"] = {
 				"toggle_node",
 				nowait = false,
 			},
-			["ga"] = "git_add_file",
 			["gu"] = "git_unstage_file",
-			-- git delete file
-			--[[ 	["gd"] = function(state)
+
+			["ga"] = function(state)
 				local node = state.tree:get_node()
 				local path = node:get_id()
+				local filename = vim.fn.fnamemodify(path, ":t")
 
-				vim.ui.input({
-					prompt = "Are you sure you want to remove " .. path .. "? [y/N]: ",
-				}, function(input)
-					if input and input:lower() == "y" then
-						-- run `git rm` command
-						local Job = require("plenary.job")
-						Job:new({
-							command = "git",
-							args = { "rm", path },
-							on_exit = function(_, return_val)
-								if return_val == 0 then
-									print("Removed: " .. path)
-									-- refresh neotree after removal
-									events.fire_event(events.GIT_EVENT)
-								else
-									print("Failed to remove: " .. path)
-								end
-							end,
-						}):start()
-					else
-						print("File removal cancelled.")
-					end
-				end)
-			end, ]]
+				-- Add file or folder with files to staging area and enter commit message
+				local Job = require("plenary.job")
+				Job:new({
+					command = "git",
+					args = { "add", path },
+					on_exit = function(_, return_val)
+						vim.schedule(function()
+							if return_val == 0 then
+								print(filename .. " staged successfully!")
+
+								-- Öppna en input-ruta för commit-meddelandet
+								vim.ui.input({ prompt = filename .. " staged - Enter commit message: " }, function(msg)
+									if not msg or msg == "" then
+										print("Commit cancelled. No message added.")
+										events.fire_event(events.GIT_EVENT)
+
+										-- Remove staging if commit is aborted
+										Job:new({
+											command = "git",
+											args = { "restore", "--staged", path },
+											on_exit = function(_, restore_val)
+												if restore_val == 0 then
+													print(filename .. " unstaged successfully.")
+													events.fire_event(events.GIT_EVENT)
+												else
+													print("Failed to unstage " .. filename)
+												end
+											end,
+										}):start()
+
+										return
+									end
+
+									-- Kör `git commit -m` med meddelandet
+									Job:new({
+										command = "git",
+										args = { "commit", "-m", msg },
+										on_exit = function(_, commit_val)
+											vim.schedule(function()
+												if commit_val == 0 then
+													print("Commit successful for " .. filename)
+													-- Uppdatera Neo-tree
+													events.fire_event(events.GIT_EVENT)
+												else
+													print("Commit failed for " .. filename)
+												end
+											end)
+										end,
+									}):start()
+								end)
+							else
+								print("Failed to stage: " .. path)
+							end
+						end)
+					end,
+				}):start()
+			end,
 
 			-- git delete file and make automatic commit for deleted file
 			["gd"] = function(state)
@@ -242,6 +276,45 @@ require("neo-tree").setup({
 							else
 								print("Commit failed.")
 							end
+						end,
+					}):start()
+				end)
+			end,
+
+			-- git mv command for renaming or moving and/or renaming files.
+			["gmv"] = function(state)
+				local node = state.tree:get_node()
+				local path = node:get_id()
+				local filename = vim.fn.fnamemodify(path, ":t")
+				local current_dir = vim.fn.fnamemodify(path, ":h")
+
+				vim.ui.input({ prompt = "Enter new name or path for '" .. filename .. "': " }, function(input)
+					if not input or input == "" then
+						print("Rename cancelled.")
+						events.fire_event(events.GIT_EVENT)
+						return
+					end
+
+					local new_path = input
+					if not input:match("^/") then -- Om inte en absolut sökväg
+						new_path = current_dir .. "/" .. input
+					end
+
+					local Job = require("plenary.job")
+					Job:new({
+						command = "git",
+						args = { "mv", path, new_path },
+						on_exit = function(j, return_val)
+							vim.schedule(function()
+								if return_val == 0 then
+									print("File moved/renamed successfully to: " .. new_path)
+									-- Uppdatera Neo-tree
+									events.fire_event(events.GIT_EVENT)
+								else
+									print("Failed to move/rename file: " .. table.concat(j:stderr_result(), "\n"))
+									events.fire_event(events.GIT_EVENT)
+								end
+							end)
 						end,
 					}):start()
 				end)
