@@ -83,11 +83,13 @@ require("neo-tree").setup({
 			hide_gitignored = true, -- Hide gitignored files
 			hide_hidden = true, -- Hide hidden files (on Windows only)
 			hide_by_name = { -- Specify items to hide by name
-				-- "node_modules"
+				"node_modules",
+				"next",
+				".git",
+				".yarn",
 			},
 			always_show = { -- Always show these items
 				".gitignored",
-				"node_modules",
 				"*.log",
 			},
 			always_show_by_pattern = { -- Always show items matching these patterns
