@@ -13,7 +13,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- auto update plugins at start
-local function augroup(name)
+--[[ local function augroup(name)
 	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 
@@ -26,9 +26,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
 			end
 		end, 1000)
 	end,
-})
+}) ]]
 
--- Auto update installs from mason
+--[[ -- Auto update installs from mason
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
 		vim.cmd("MasonUpdate")
@@ -40,7 +40,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
 		vim.cmd("TSUpdate")
 	end,
-})
+}) ]]
 
 -- Close lazy UI with ESC
 local user_grp = vim.api.nvim_create_augroup("LazyUserGroup", { clear = true })
