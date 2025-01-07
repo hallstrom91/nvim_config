@@ -15,56 +15,26 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Load my default settings for nvim
-vim.o.number = true -- Show line numbers
-vim.o.relativenumber = false -- Relative line numbers (very annoying)
-vim.o.expandtab = true -- Use spaces instead of tabs
-vim.o.shiftwidth = 4 -- Indentation width
-vim.o.tabstop = 4 -- Tab width
-vim.o.termguicolors = true -- Enable true colors
-vim.o.splitbelow = false -- Open windows horizontal
-vim.o.splitright = true -- Open windows vertical
-vim.g.loaded_netrw = 1 -- disable netrw
-vim.g.loaded_netrwPlugin = 1 -- disable netrw
-vim.o.foldenable = true -- enable folding
-vim.o.foldlevel = 99
-vim.o.foldlevelstart = 99
-vim.o.foldcolumn = "1"
-vim.opt.clipboard = "unnamedplus" -- sync clipboard actions with system clipboard
---vim.opt.guicursor = "n-v-c-i:ver25" -- changes all cursor markers to thin |
-vim.opt.guicursor = {
-	-- Normal mode: horizontal line _
-	"n-v-c:hor25",
-	-- Insert mode: vertical thin line |
-	"i-ci-ve:ver25",
-	-- Command line - vertical
-	"c:ver25",
-}
---vim.o.foldmethod = "expr"
---vim.o.foldexpr = "nvim_treesitter#foldexpr()"
-
--- Disable providers
-vim.g.loaded_node_provider = 0
-vim.g.loaded_python3_provider = 0
-vim.g.loaded_perl_provider = 0
-vim.g.loaded_ruby_provider = 0
+-- Load options
+local options_path = vim.fn.stdpath("config") .. "/lua/core/options.lua"
+if vim.fn.filereadable(options_path) == 1 then
+	dofile(options_path)
+else
+	vim.api.nvim_echo({ { "options.lua file not found", "WarningMsg" } }, true, {})
+end
 
 -- Load mappings
-local mappings_path = vim.fn.stdpath("config") .. "/lua/mappings.lua"
---local mappings_loaded = false
-if vim.fn.filereadable(mappings_path) == 1 then
-	dofile(mappings_path)
---	mappings_loaded = true
+local keymaps_path = vim.fn.stdpath("config") .. "/lua/core/keymaps.lua"
+if vim.fn.filereadable(keymaps_path) == 1 then
+	dofile(keymaps_path)
 else
 	vim.api.nvim_echo({ { "mappings.lua file not found", "WarningMsg" } }, true, {})
 end
 
 -- Load autocmds
-local autocmds_path = vim.fn.stdpath("config") .. "/lua/autocmds.lua"
---local autocmds_loaded = false
+local autocmds_path = vim.fn.stdpath("config") .. "/lua/core/autocmds.lua"
 if vim.fn.filereadable(autocmds_path) == 1 then
 	dofile(autocmds_path)
-	--autocmds_loaded = true
 else
 	vim.api.nvim_echo({ { "autocmds.lua file not found", "WarningMsg" } }, true, {})
 end

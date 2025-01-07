@@ -186,7 +186,7 @@ require("neo-tree").setup({
 				local path = node:get_id()
 
 				vim.ui.input({
-					prompt = "Are you sure you want to remove " .. path .. "? [y/N]: ",
+					prompt = "Are you sure you want to REMOVE " .. path .. "? [y/N]: ",
 				}, function(input)
 					if input and input:lower() == "y" then
 						local filename = vim.fn.fnamemodify(path, ":t")
@@ -232,7 +232,7 @@ require("neo-tree").setup({
 				local path = node:get_id()
 
 				vim.ui.input({
-					prompt = "Are you sure you want to restore " .. path .. "? [y/N]: ",
+					prompt = "Are you sure you want to RESTORE " .. path .. "? [y/N]: ",
 				}, function(input)
 					if input and input:lower() == "y" then
 						-- Run `git restore` command
@@ -346,6 +346,11 @@ require("neo-tree").setup({
 })
 
 -- Ctrl + n: Toggle Neo-tree file explorer
-map("n", "<C-n>", ":Neotree toggle reveal_force_cwd=true<CR>", opts)
+map(
+	"n",
+	"<C-n>",
+	":Neotree toggle reveal_force_cwd=true<CR>",
+	vim.tbl_extend("force", opts, { desc = "Open File explorer" })
+)
 --
-map("n", "<Leader>e", ":Neotree toggle focus<CR>", { desc = "Focus Neo-tree" })
+--[[ map("n", "<Leader>e", ":Neotree toggle focus<CR>", { desc = "Focus Neo-tree" }) ]]

@@ -1,9 +1,9 @@
 local mode_icons = {
-	NORMAL = " ", 
-	INSERT = "󱓥 ", 
-	VISUAL = "󱘣 ", 
-	REPLACE = "󰛈", 
-	COMMAND = " ", 
+	NORMAL = " ",
+	INSERT = "󱓥 ",
+	VISUAL = "󱘣 ",
+	REPLACE = "󰛈",
+	COMMAND = " ",
 }
 
 local function mode_with_icon()
@@ -56,20 +56,16 @@ require("lualine").setup({
 				path = 0, -- 1 =  filename, 2: filename with path, 3: full path
 			},
 		},
-		lualine_x = {
+		--[[ 		lualine_x = {
 			"filetype", -- Filens typ
 			{
 				"location",
 				padding = { left = 1, right = 2 },
 			},
-		},
+		}, ]]
+		lualine_x = {},
 		lualine_y = {
-			{
-				current_time,
-				icon = " ",
-			},
-		},
-		lualine_z = {
+
 			{
 				"diagnostics",
 				sources = { "nvim_lsp" },
@@ -83,16 +79,36 @@ require("lualine").setup({
 					hint = "DiagnosticHint", -- Changes diagnostics' hint color.
 				},
 				symbols = { error = " E", warn = " W", info = " I", hint = "󰘥 H" },
-				colored = false,
+				colored = true,
+			},
+
+			icons_enabled,
+		},
+		lualine_z = {
+
+			{
+				current_time,
+				icon = " ",
 			},
 		},
 	}, -- End of section config
 
+	inactive_sections = {
+		lualine_a = {},
+		lualine_b = {},
+		lualine_c = {},
+		lualine_x = {},
+		lualine_y = {},
+		lualine_z = {},
+	},
+
 	options = {
 		theme = "auto", -- Set theme (optional)
 		icons_enabled = true,
+		component_separators = "",
 		section_separators = { left = "", right = "" },
-		component_separators = { left = "", right = "" },
+		--	section_separators = { left = "", right = "" },
+		--	component_separators = { left = "", right = "" },
 		always_divide_middle = true,
 		show_buffer_close_icons = true,
 	},

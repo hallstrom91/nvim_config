@@ -13,7 +13,6 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 -- auto update plugins at start
-
 local function augroup(name)
 	return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
@@ -25,7 +24,7 @@ vim.api.nvim_create_autocmd("VimEnter", {
 			if require("lazy.status").has_updates() then
 				require("lazy").update({ show = false })
 			end
-		end, 1000) -- 1000 ms delay at startup
+		end, 1000)
 	end,
 })
 
@@ -43,10 +42,15 @@ vim.api.nvim_create_autocmd("VimEnter", {
 	end,
 })
 
--- deactivate indent-blankline in dashboard
---[[ vim.api.nvim_create_autocmd("FileType", {
-	pattern = "dashboard",
+-- Close lazy UI with ESC
+local user_grp = vim.api.nvim_create_augroup("LazyUserGroup", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "lazy",
+	desc = "Quit lazy with <esc>",
 	callback = function()
-		vim.b.indent_blankline_enabled = false
+		vim.keymap.set("n", "<esc>", function()
+			vim.api.nvim_win_close(0, false)
+		end, { buffer = true, nowait = true })
 	end,
-}) ]]
+	group = user_grp,
+})
