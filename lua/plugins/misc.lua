@@ -116,8 +116,4 @@ return {
 			end)
 		end,
 	},
-
-	--[[ 	{
-		"kevinhwang91/promise-async",
-	}, ]]
 }

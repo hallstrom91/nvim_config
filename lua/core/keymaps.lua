@@ -45,10 +45,10 @@ map("n", "<S-Up>", "v<Up>", vim.tbl_extend("force", opts, { desc = "Select text 
 map("n", "<S-Down>", "v<Down>", vim.tbl_extend("force", opts, { desc = "Select text downwards" }))
 
 -- Shift + Arrow keys for text selection in visual mode
-map("v", "<S-Left>", "<Left>", vim.tbl_extend("force", opts, { desc = "Select left in visual mode" }))
+--[[ map("v", "<S-Left>", "<Left>", vim.tbl_extend("force", opts, { desc = "Select left in visual mode" }))
 map("v", "<S-Right>", "<Right>", vim.tbl_extend("force", opts, { desc = "Select right in visual mode" }))
 map("v", "<S-Up>", "<Up>", vim.tbl_extend("force", opts, { desc = "Select up in visual mode" }))
-map("v", "<S-Down>", "<Down>", vim.tbl_extend("force", opts, { desc = "Select down in visual mode" }))
+map("v", "<S-Down>", "<Down>", vim.tbl_extend("force", opts, { desc = "Select down in visual mode" })) ]]
 
 -- Shift + Arrow keys for text selection in insert mode
 map("i", "<S-Left>", "<C-o>v<Left>", vim.tbl_extend("force", opts, { desc = "Select left in insert mode" }))

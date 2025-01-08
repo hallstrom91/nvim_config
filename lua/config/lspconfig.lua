@@ -116,9 +116,9 @@ local servers = {
 	-- CSS modules
 	cssmodules_ls = {
 		filetypes = {
-			"typescript",
-			"typescriptreact",
-			"typescript.tsx",
+			--	"typescript",
+			--	"typescriptreact",
+			--	"typescript.tsx",
 			"javascript",
 			"javascriptreact",
 			"javascript.jsx",
@@ -133,20 +133,6 @@ local servers = {
 	-- JSON
 	jsonls = {
 		filetypes = { "json" },
-		schemas = {
-			{
-				fileMatch = { ".prettierrc", ".prettierrc.json", "prettier.config.json" },
-				url = "https://json.schemastore.org/prettierrc.json",
-			},
-			{
-				fileMatch = { ".eslintrc", ".eslintrc.json" },
-				url = "https://json.schemastore.org/eslintrc.json",
-			},
-			{
-				fileMatch = { ".babelrc", ".babelrc.json", "babel.config.json" },
-				url = "https://json.schemastore.org/babelrc.json",
-			},
-		},
 	},
 }
 
@@ -204,5 +190,5 @@ vim.api.nvim_create_user_command("RestartLsp", function()
 	vim.cmd("LspStop")
 	vim.cmd("LspStart")
 	require("cmp").setup()
-	print("All LSP servers and cmp restarted!")
+	print("All LSP servers and CMP restarted!")
 end, {})

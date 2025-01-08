@@ -31,14 +31,14 @@ cmp.setup({
 				ellipsis_char = "...",
 			})(entry, vim_item)
 
-			vim_item.abbr = vim_item.abbr:gsub("%$%d", "") -- test to remove () from imports
+			vim_item.abbr = vim_item.abbr:gsub("%$%d", "")
 
 			vim_item.menu = source_mapping[entry.source.name] or ""
 			return vim_item
 		end,
 	},
 	performance = {
-		max_view_entries = 15, -- show max 15 suggestions in CMP list
+		max_view_entries = 15, -- number of suggestion displayed
 	},
 	window = {
 		completion = {
@@ -124,38 +124,6 @@ cmp.setup({
 	},
 })
 
--- test
---[[ cmp.event:on(
-	"confirm_done",
-	cmp_autopairs.on_confirm_done({
-		map_char = {
-			all = "(",
-			typescriptreact = "<",
-			javascriptreact = "<",
-			tex = "",
-		},
-	})
-)
- ]]
-
---[[ cmp.event:on("confirm_done", function(event)
-	local entry = event.entry
-	local context = event.context or {}
-	local line = context.cursor_before_line or ""
-
-	print(vim.inspect(event))
-	if line:match("^%s*import%s+{.*") or line:match("^%s*import%s+.*;$") then
-		require("nvim-autopairs.completion.cmp").on_confirm_done({
-			mapchar = {
-				all = "",
-				tex = "",
-			},
-		})(event)
-	else
-		cmp_autopairs.on_confirm_done()(event)
-	end
-end) ]]
-
 -- for ":" (cmdline)
 cmp.setup.cmdline(":", {
 	mapping = cmp.mapping.preset.cmdline(),
@@ -175,13 +143,7 @@ cmp.setup.cmdline("/", {
 	},
 })
 
--- vim.cmd([[
--- highlight Pmenu guibg=#2E3440 guifg=#D8DEE9
--- highlight PmenuSel guibg=#4C566A guifg=#D8DEE9
--- highlight PmenuSbar guibg=#3B4252
--- highlight PmenuThumb guibg=#4C566A
--- ]])
---
+cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
 vim.api.nvim_set_hl(0, "Pmenu", { bg = "#2E3440", fg = "#D8DEE9" })
 vim.api.nvim_set_hl(0, "PmenuSel", { bg = "#4C566A", fg = "#D8DEE9" })

@@ -3,10 +3,7 @@ return {
 		"tpope/vim-fugitive",
 		cmd = { "Git", "Gstatus", "Gcommit", "Gpush", "Gpull" },
 		config = function()
-			vim.cmd([[
-				nnoremap <leader>gs :Git status<CR>
-				nnoremap <leader>gd :Git diff<CR>
-			]])
+			-- add config here or load config if needed
 		end,
 	},
 
@@ -15,6 +12,7 @@ return {
 		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("config.gitsigns")
+			require("scrollbar.handlers.gitsigns").setup()
 		end,
 	},
 }

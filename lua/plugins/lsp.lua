@@ -23,7 +23,7 @@ return {
 						package_uninstalled = " ",
 					},
 				},
-				ensured_installed = { "pip" }, -- for python
+				ensured_installed = { "pip" }, -- python
 			})
 		end,
 	},
@@ -35,7 +35,8 @@ return {
 			local mason_lspconfig = require("mason-lspconfig")
 
 			mason_lspconfig.setup({
-				-- only LSP servers (auto-install) - List of MASON LSP servers can be found thru cmdline with command "Mason".
+				-- Only LSP servers (auto-install)
+				-- List of MASON LSP servers can be found thru cmdline with command "Mason".
 				ensure_installed = {
 					"ts_ls",
 					"html",
@@ -102,15 +103,14 @@ return {
 		dependencies = { "neovim/nvim-lspconfig" },
 		config = function()
 			vim.g.lspTimeoutConfig = {
-				stopTimeout = 1000 * 60 * 25, -- 25min until LSP shutdown for buffer if inactive.
+				stopTimeout = 1000 * 60 * 25, -- 25min until LSP shutdown if inactive.
 				startTimeout = 1000 * 5, -- 5s to restart LSP for buffer
-				silent = false, -- Get notifications if deactivated / activated
+				silent = false, -- Notifications if deactivated / activated
 				filetypes = {
 					ignore = { "markdown", "plaintext" },
 				},
 			}
 
-			-- Validera inställningen
 			local Config = require("lsp-timeout.config").Config
 			Config:new(vim.g.lspTimeoutConfig):validate()
 		end,
@@ -168,7 +168,7 @@ return {
 			autopairs.add_rules({
 				Rule("{", "}"):with_pair(function(opts)
 					local line = opts.line
-					return not line:match("^%s*import%s*{.*") -- If row starts with "import { "
+					return not line:match("^%s*import%s*{.*") -- If row starts with -  import {
 				end),
 
 				Rule(";", ""):with_pair(function(opts)
@@ -176,11 +176,15 @@ return {
 					return line:match("^%s*import%s+.*;$") ~= nil
 				end),
 			})
+		end,
+	},
 
-			local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-			local cmp = require("cmp")
-
-			cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
+	{
+		"linrongbin16/lsp-progress.nvim",
+		dependencies = { "nvim-lualine/lualine.nvim" }, -- Lualine integration
+		event = { "BufReadPre", "BufNewFile" },
+		config = function()
+			require("lsp-progress").setup()
 		end,
 	},
 }

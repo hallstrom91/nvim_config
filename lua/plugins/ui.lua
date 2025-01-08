@@ -13,7 +13,7 @@ return {
 	{
 		"nvim-lualine/lualine.nvim",
 		dependencies = { "nvim-web-devicons" },
-		event = "BufWinEnter", -- Test
+		event = "BufWinEnter",
 		config = function()
 			require("config.lualine")
 		end,
@@ -21,7 +21,7 @@ return {
 
 	{
 		"lukas-reineke/indent-blankline.nvim",
-		event = { "BufReadPre", "BufNewFile" }, -- test
+		event = { "BufReadPre", "BufNewFile" },
 		config = function()
 			require("config.indent-blankline")
 		end,
@@ -29,14 +29,14 @@ return {
 
 	{
 		"NvChad/nvim-colorizer.lua",
-		ft = { "css", "scss", "html", "javascript", "typescript" },
+		ft = { "css", "scss", "html", "javascript", "typescript", "lua" },
 		config = function()
 			require("colorizer").setup({
 
 				user_default_options = {
 					RGB = true,
 					RRGGBB = true,
-					names = true,
+					names = false,
 					css = true,
 					css_fn = true,
 					mode = "background",
@@ -51,7 +51,7 @@ return {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-		ft = "markdown", -- test
+		ft = "markdown",
 		config = function()
 			require("render-markdown").setup({
 				latex = { enabled = false },
@@ -70,7 +70,7 @@ return {
 		"rockyzhang24/arctic.nvim",
 		branch = "v2",
 		dependencies = { "rktjmp/lush.nvim" },
-		enabled = false,
+		enabled = false, -- put true if you want to use
 		config = function()
 			vim.cmd("colorscheme arctic")
 		end,
@@ -79,17 +79,15 @@ return {
 	{
 		"askfiy/visual_studio_code",
 		priority = 100,
+		enabled = true, -- change to false if you want another theme
 		config = function()
 			vim.cmd([[colorscheme visual_studio_code]])
 			require("visual_studio_code").setup({
-				-- `dark` or `light`
-				mode = "dark",
-				-- Whether to load all color schemes
-				preset = true,
-				-- Whether to enable background transparency
-				transparent = true,
-				-- Whether to apply the adapted plugin
+				mode = "dark", -- dark / light
+				preset = true, -- Whether to load all color schemes
+				transparent = true, -- Whether to enable background transparency
 				expands = {
+					-- Whether to apply the adapted plugin
 					hop = false,
 					dbui = false,
 					lazy = true,
@@ -107,7 +105,7 @@ return {
 					vim_illuminate = false,
 					nvim_treesitter = true,
 					nvim_ts_rainbow = false,
-					nvim_scrollview = false,
+					nvim_scrollview = true,
 					nvim_ts_rainbow2 = false,
 					indent_blankline = true,
 					vim_visual_multi = false,
@@ -117,6 +115,14 @@ return {
 					after = function(conf, colors, utils) end,
 				},
 			})
+		end,
+	},
+
+	{
+		"petertriho/nvim-scrollbar",
+		event = { "BufReadPost", "BufWinEnter" },
+		config = function()
+			require("config.scrollbar")
 		end,
 	},
 
