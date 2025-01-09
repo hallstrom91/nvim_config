@@ -94,7 +94,27 @@ local lsp_diagnostics = {
 -- component to show lsp loading progress
 local lsp_progress = {
 	function()
-		return require("lsp-progress").progress()
+		return require("lsp-progress").progress({
+			format = function(messages)
+				local active_clients = vim.lsp.get_active_clients()
+				local client_count = #active_clients
+				if #messages > 0 then
+					return " LSP: " .. client_count .. " " .. table.concat(messages, " ")
+				end
+				if #active_clients <= 0 then
+					return " LSP: " .. client_count
+				else
+					local client_names = {}
+					for i, client in ipairs(active_clients) do
+						if client and client.name ~= "" then
+							table.insert(client_names, "[" .. client.name .. "]")
+							print("client[" .. i .. "]:" .. vim.inspect(client.name))
+						end
+					end
+					return " LSP: " .. client_count .. " " .. table.concat(client_names, " ")
+				end
+			end,
+		})
 	end,
 	color = {
 		fg = colors.fg,
@@ -102,6 +122,7 @@ local lsp_progress = {
 	},
 }
 
+-- display nvim logo if no searchcount or selectedcount
 local nvim_logo = {
 	function()
 		return " neovim"
@@ -122,13 +143,12 @@ require("lualine").setup({
 		theme = custom_theme,
 		component_separators = "", -- no icons between components
 		section_separators = { left = "", right = "" },
-		--	section_separators = "|", -- no icons between sections
 		--	component_separators = { left = "", right = "" },
 		--	section_separators = { left = "", right = "" },
 		always_divide_middle = true,
 		disabled_filetypes = {
-			statusline = { "neo-tree", "git", "fugitive", "trouble" },
-			winbar = { "neo-tree", "DiffviewFiles", "git" },
+			statusline = { "neo-tree", "git", "fugitive", "trouble", "dashboard" },
+			winbar = { "neo-tree", "DiffviewFiles", "git", "dashboard" },
 		},
 	},
 
@@ -171,11 +191,11 @@ require("lualine").setup({
 				file_status = true, -- show modified
 				newfile_status = true,
 				path = 0, -- 1 =  filename, 2: filename with path, 3: full path
-				--[[ 		color = {
-						fg = colors.fg,
-						bg = colors.visual_color,
-					}, ]]
-				--	cond = helper.screen_width(120),
+				color = {
+					fg = colors.fg,
+					bg = colors.visual_color,
+				},
+				cond = helper.screen_width(120),
 			},
 		},
 
