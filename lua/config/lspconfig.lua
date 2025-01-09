@@ -55,41 +55,36 @@ local servers = {
 	-- Python
 	pyright = { filetypes = { "python" } },
 	-- Lua
-	--[[ 	lua_ls = {
-		settings = {
-			Lua = {
-				runtime = { version = "LuaJIT", path = vim.split(package.path, ";") },
-				diagnostics = {
-					globals = { "vim" },
-                    -- disable = {"undefined-field"}, 
-				},
-				workspace = {
-					library = {
-                        -- vim.env.VIMRUNTIME,
-						[vim.fn.stdpath("config") .. "/lua"] = true,
-						[vim.fn.stdpath("data") .. "/lazy"] = true,
-					},
-					maxPreload = 200,
-					preloadFileSize = 500,
-                    checkThirdParty = false,
-				},
-				telemetry = { enable = false },
-				completion = { enable = true, callSnippet = "Replace" },
-			},
-		},
-		filetypes = { "lua" },
-	}, ]]
-
 	lua_ls = {
 		settings = {
 			Lua = {
+				runtime = { version = "LuaJIT" },
 				diagnostics = {
 					globals = { "vim" },
+					-- disable = {"undefined-field"},
+				},
+				workspace = {
+					library = {
+						vim.env.VIMRUNTIME,
+						--[[ 		[vim.fn.stdpath("config") .. "/lua"] = true,
+						[vim.fn.stdpath("data") .. "/lazy"] = true, ]]
+					},
+					checkThirdParty = false,
+				},
+				telemetry = { enable = false },
+				completion = { enable = true, callSnippet = "Replace" },
+				hint = {
+					enable = true,
+					setType = false,
+					paramType = "Disable",
+					semicolon = "Disable",
+					arrayIndex = "Disable",
 				},
 			},
 		},
 		filetypes = { "lua" },
 	},
+
 	-- Markdown (github readme etc)
 	marksman = {
 		filetypes = { "markdown" },
@@ -118,7 +113,6 @@ local servers = {
 		filetypes = {
 			--	"typescript",
 			--	"typescriptreact",
-			--	"typescript.tsx",
 			"javascript",
 			"javascriptreact",
 			"javascript.jsx",
@@ -143,7 +137,7 @@ local on_attach = function(client, bufnr)
 		"ts_ls",
 		"html",
 		"cssls",
-		"luals",
+		"lua_ls",
 		"pyright",
 		"yamlls",
 		"marksman",
