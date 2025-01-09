@@ -1,5 +1,5 @@
 local api = vim.api
-local keymap = vim.keymap
+local map = vim.keymap.set
 local dashboard = require("dashboard")
 
 local function load_imgs(file)
@@ -18,8 +18,7 @@ local function open_link(link)
 end
 
 -- Load header ASCII image by filename
---local selected_header = "dash_nvim"
-local selected_header = "dash_neovim"
+local selected_header = "dash_neovim" -- or "dash_nvim"
 
 local conf = {}
 
@@ -35,13 +34,13 @@ conf.center = {
 	},
 	{
 		icon = "󰈢  ",
-		desc = "Recently opened files                   ",
+		desc = "Recently Opened Files                   ",
 		action = "Telescope oldfiles",
 		key = "<Leader> f r",
 	},
 	{
 		icon = "󰈬  ",
-		desc = "Project grep                            ",
+		desc = "Project Grep                            ",
 		action = "Telescope live_grep",
 		key = "<Leader> f g",
 	},
@@ -53,13 +52,19 @@ conf.center = {
 	},
 	{
 		icon = "󰍜  ",
-		desc = "Open NeoTree Menu                        ",
+		desc = "Open Neotree Menu                        ",
 		action = "Neotree toggle reveal_force_cwd=true",
 		key = "CTRL n",
 	},
 	{
+		icon = "  ",
+		desc = "Display Keybinds                       ",
+		action = "WhichKey",
+		key = "spacebar",
+	},
+	{
 		icon = "󰗼  ",
-		desc = "Quit Nvim                               ",
+		desc = "Quit Neovim                               ",
 		action = "qa",
 		key = "q",
 	},
@@ -84,7 +89,9 @@ api.nvim_create_autocmd("FileType", {
 	pattern = "dashboard",
 	group = api.nvim_create_augroup("dashboard_enter", { clear = true }),
 	callback = function()
-		keymap.set("n", "q", ":qa<CR>", { buffer = true, silent = true })
-		keymap.set("n", "e", ":enew<CR>", { buffer = true, silent = true })
+		map("n", "q", ":qa<CR>", { buffer = true, silent = true })
+		map("n", "e", ":enew<CR>", { buffer = true, silent = true })
 	end,
 })
+
+map("n", "<leader>db", ":Dashboard<CR>", { noremap = true, silent = true, desc = "Open Dashboard" })
