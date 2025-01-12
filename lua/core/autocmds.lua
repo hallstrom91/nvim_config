@@ -1,15 +1,18 @@
+local autocmd = vim.api.nvim_create_autocmd
+local map = vim.api.nvim_set_keymap
+
 -- Format on save
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = { "*", "*.md" },
-	callback = function(args)
-		require("conform").format({ bufnr = args.buf })
-	end,
+autocmd('BufWritePre', {
+  pattern = { '*', '*.md' },
+  callback = function(args)
+    require('conform').format({ bufnr = args.buf })
+  end,
 })
 
 -- open help window in vertical mode
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "help",
-	command = "wincmd L",
+autocmd('FileType', {
+  pattern = 'help',
+  command = 'wincmd L',
 })
 
 -- auto update plugins at start
@@ -30,9 +33,9 @@ vim.api.nvim_create_autocmd("FileType", {
 -- })
 
 -- Auto update Treesitter Parsers
-vim.api.nvim_create_autocmd("VimEnter", {
-	pattern = "VeryLazy",
-	callback = function()
-		vim.cmd("TSUpdate")
-	end,
+autocmd('VimEnter', {
+  pattern = 'VeryLazy',
+  callback = function()
+    vim.cmd('TSUpdate')
+  end,
 })
