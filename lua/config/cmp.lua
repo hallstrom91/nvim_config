@@ -122,6 +122,22 @@ cmp.setup({
   experimental = {
     ghost_text = false,
   },
+  enabled = function()
+    local context = require('cmp.config.context')
+    local buftype = vim.bo.buftype
+
+    if buftype == 'prompt' then
+      return false
+    end
+
+    -- remove below?
+    if vim.api.nvim_get_mode().mode == 'c' then
+      return true
+    end
+
+    -- remove suggestions on comment lines
+    return not context.in_treesitter_capture('comment') and not context.in_syntax_group('Comment')
+  end,
 })
 
 -- for ":" (cmdline)
@@ -130,9 +146,9 @@ cmp.setup.cmdline(':', {
   sources = cmp.config.sources({
     { name = 'path' },
   }, {
-    { name = 'cmdline', keyword_length = 2 },
+    { name = 'cmdline', keyword_length = 1 },
   }),
-  matching = { disallow_symbol_nonprefix_matching = false },
+  --  matching = { disallow_symbol_nonprefix_matching = false },
 })
 
 -- For `/` (search)

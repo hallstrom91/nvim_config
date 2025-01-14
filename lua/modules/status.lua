@@ -89,7 +89,7 @@ status_components.lsp_progress = {
   function()
     return require('lsp-progress').progress({
       format = function(messages)
-        local active_clients = vim.lsp.get_active_clients() -- TODO: fix this!
+        local active_clients = vim.lsp.get_clients() -- TODO: fix this!
         local client_count = #active_clients
         if #messages > 0 then
           return ' LSP: ' .. client_count .. ' ' .. table.concat(messages, ' ')
@@ -98,7 +98,7 @@ status_components.lsp_progress = {
           return ' LSP: ' .. client_count
         else
           local client_names = {}
-          for i, client in ipairs(active_clients) do
+          for _, client in ipairs(active_clients) do
             if client and client.name ~= '' then
               table.insert(client_names, '[' .. client.name .. ']')
             end
@@ -114,51 +114,16 @@ status_components.lsp_progress = {
   },
 }
 
--- Funktion för att öppna diagnostik med Telescope Quickfix
---[[ function status_components.open_diagnostics_with_telescope()
-  local diagnostics = vim.diagnostic.get(0)
-  if #diagnostics == 1 then
-    vim.diagnostic.setqflist() -- Lägg till diagnostik i Quickfix-listan
-    require('telescope.builtin').quickfix() -- Öppna Telescope Quickfix
-  end
-end ]]
-
 function status_components.open_diagnostics_with_telescope()
   vim.diagnostic.setqflist({ open = false }) -- add diagnostic but dont open qflist
 
   local quickfix_items = vim.fn.getqflist()
   if #quickfix_items > 0 then
-    require('telescope.builtin').quickfix() -- Öppna Telescope Quickfix
+    --  require('telescope.builtin').quickfix() -- Open Telescope Quickfix
+    require('telescope.builtin').diagnostics() -- Open Telescope Diagnostics
   else
     print('Nothing to fix silly human!')
   end
 end
-
--- Funktion för att öppna diagnostik med Trouble
---[[ function status_components.open_diagnostics_with_trouble()
-  local trouble = require('trouble')
-  if trouble.is_open() then
-    trouble.close() -- Stäng Trouble om det redan är öppet
-  else
-    trouble.open('lsp_document_diagnostics') -- Öppna diagnostik för det aktuella dokumentet
-  end
-end
- ]]
-
---[[ function status_components.jump_to_diagnostic_or_open_qflist()
-	local diagnostics = vim.diagnostic.get(0)
-	if #diagnostics == 0 then
-		vim.diagnostic.setqflist()
-		return
-	end
-
-	if #diagnostics == 1 then
-		local diag = diagnostics[1]
-		vim.api.nvim_win_set_cursor(0, { diag.lnum + 1, diag.col })
-		return
-	end
-
-	vim.diagnostic.setqflist()
-end ]]
 
 return status_components

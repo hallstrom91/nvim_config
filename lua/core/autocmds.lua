@@ -1,5 +1,4 @@
 local autocmd = vim.api.nvim_create_autocmd
-local map = vim.api.nvim_set_keymap
 
 -- Format on save
 autocmd('BufWritePre', {
@@ -38,4 +37,10 @@ autocmd('VimEnter', {
   callback = function()
     vim.cmd('TSUpdate')
   end,
+})
+
+-- Recognize .bash files
+autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '.bash_*',
+  command = 'set filetype=bash',
 })
