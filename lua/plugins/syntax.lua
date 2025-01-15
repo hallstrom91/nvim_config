@@ -21,7 +21,7 @@ return {
         },
         sync_install = false,
         auto_install = false,
-        fold = { enable = true },
+        fold = { enable = false }, -- using nvim-ufo for folding
         highlight = {
           enable = true,
           additional_vim_regex_highlighting = true,

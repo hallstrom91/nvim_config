@@ -74,7 +74,7 @@ return {
           'shfmt',
           'stylua',
         },
-        auto_update = true, -- Håller verktyg uppdaterade
+        auto_update = true,
         run_on_start = true,
         start_delay = 3000, -- 3s delay
         debounce_hours = 24, -- 24h between update attempts

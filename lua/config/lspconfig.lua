@@ -12,6 +12,7 @@ ufo_capabilities.textDocument.foldingRange = {
   lineFoldingOnly = true,
 }
 init_capabilities = vim.tbl_deep_extend('keep', init_capabilities, ufo_capabilities)
+--init_capabilities = vim.tbl_deep_extend('force', init_capabilities, ufo_capabilities)
 
 -- LSP Flags
 local lsp_flags = { debounce_text_changes = 150 }
@@ -124,13 +125,13 @@ local servers = {
   },
   -- JSON
   jsonls = {
-    filetypes = { 'json' },
+    filetypes = { 'json', 'jsonc' },
   },
 }
 
 -- deactivate LSP formatting in favor of prettier, stylua, black etc.
 local on_attach = function(client, bufnr)
-  -- Use prettier instead of LSP formatter for this lsp servers
+  -- Use prettierd instead of LSP formatter
   local exclude_formatting = {
     'ts_ls',
     'html',
@@ -185,3 +186,11 @@ vim.api.nvim_create_user_command('RestartLsp', function()
   --require('cmp').setup()
   print('All LSP servers and CMP restarted!')
 end, {})
+
+-- LSP related keybinds
+local map = vim.keymap.set
+local opts = { noremap = true, silent = true }
+
+map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', vim.tbl_extend('force', opts, { desc = 'Go to definition' }))
+map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', vim.tbl_extend('force', opts, { desc = 'Find references' }))
+map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', vim.tbl_extend('force', opts, { desc = 'Hover documentation' }))

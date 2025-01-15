@@ -79,7 +79,7 @@ return {
   {
     'askfiy/visual_studio_code',
     priority = 100,
-    enabled = false, -- change to false if you want another theme
+    enabled = true, -- change to false if you want another theme
     config = function()
       vim.cmd([[colorscheme visual_studio_code]])
       require('visual_studio_code').setup({
@@ -131,16 +131,16 @@ return {
     branch = 'master',
     enabled = false,
     config = function()
-      -- Lägg till eventuell extra konfiguration här
+      -- add config here if enabled
     end,
   },
 
   -- theme development - testing
   {
-
     dir = '~/.local/share/nvim/lazy/webdever-theme',
+    enabled = false,
     config = function()
-      require('webdever-theme').setup({ mode = 'dark' })
+      require('webdever-theme').setup({ mode = 'dark', cmp = true, telescope = true })
     end,
   },
 
