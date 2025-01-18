@@ -1,39 +1,9 @@
-local status = require('modules.status')
-local colors = require('modules.colors').vsc_dark_modern
-local custom_theme = require('modules.themes').vsc_dark_lualine
-local utils = require('modules.utils')
-
-local nvim_logo_and_version = status.nvim_logo_and_version
-local nvim_logo_and_version_color = status.nvim_logo_and_version_color
-local clock = status.clock
-local lsp_progress = status.lsp_progress
-local open_diagnostics_with_telescope = status.open_diagnostics_with_telescope
-
-local left_separator = utils.left_separator_lualine
-local right_separator = utils.right_separator_lualine
-
--- icons for current mode
-local mode_icons = {
-  NORMAL = ' ',
-  INSERT = '󱓥 ',
-  VISUAL = '󱘣 ',
-  REPLACE = '󰛈 ',
-  COMMAND = ' ',
-}
-
--- get the current mode
-local function mode_with_icon()
-  local current_mode = vim.fn.mode():sub(1, 1)
-  local mode_map = {
-    n = 'NORMAL',
-    i = 'INSERT',
-    v = 'VISUAL',
-    R = 'REPLACE',
-    c = 'COMMAND',
-  }
-  local mode_name = mode_map[current_mode] or 'NORMAL'
-  return mode_icons[mode_name] .. mode_name
-end
+local colors = require('modules.ui.colors').vsc_dark_modern
+local custom_theme = require('modules.lualine.themes').vsc_dark_lualine
+local lsp = require('modules.diagnostics.lsp_actions')
+local system = require('modules.lualine.system')
+local logo = require('modules.ui.logo')
+local separators = require('modules.lualine.separators')
 
 -- LSP diagnostics
 local lsp_diagnostics = {
@@ -47,7 +17,7 @@ local lsp_diagnostics = {
     hint = colors.cyan,
   },
   on_click = function()
-    open_diagnostics_with_telescope()
+    lsp.open_diagnostics_with_telescope()
   end,
 }
 
@@ -72,7 +42,7 @@ require('lualine').setup({
 
     lualine_a = {
       {
-        mode_with_icon,
+        system.mode_with_icon,
         padding = { left = 1, right = 1 },
       },
     },
@@ -88,7 +58,7 @@ require('lualine').setup({
         },
       },
       { 'location', color = { bg = colors.visual_color } },
-      left_separator(colors.visual_color),
+      separators.left_lualine(colors.visual_color),
     },
 
     lualine_c = {
@@ -118,18 +88,18 @@ require('lualine').setup({
       { 'selectioncount' },
       { 'searchcount' },
       -- nvim_logo_and_version,
-      nvim_logo_and_version_color,
+      logo.nvim_logo_and_version_color,
     },
 
     lualine_y = {
-      lsp_progress,
-      right_separator(colors.bg_local),
+      lsp.lsp_progress,
+      separators.right_lualine(colors.bg_local),
       { 'filetype', color = { bg = colors.bg_local } },
       lsp_diagnostics,
     },
 
     lualine_z = {
-      clock,
+      system.clock,
     },
   },
 
