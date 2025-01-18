@@ -32,7 +32,6 @@ return {
     ft = { 'css', 'scss', 'html', 'javascript', 'typescript', 'lua' },
     config = function()
       require('colorizer').setup({
-
         user_default_options = {
           RGB = true,
           RRGGBB = true,
@@ -79,7 +78,7 @@ return {
   {
     'askfiy/visual_studio_code',
     priority = 100,
-    enabled = true, -- change to false if you want another theme
+    enabled = false, -- change to false if you want another theme
     config = function()
       vim.cmd([[colorscheme visual_studio_code]])
       require('visual_studio_code').setup({
@@ -138,9 +137,18 @@ return {
   -- theme development - testing
   {
     dir = '~/.local/share/nvim/lazy/webdever-theme',
-    enabled = false,
+    enabled = true,
     config = function()
-      require('webdever-theme').setup({ mode = 'dark', cmp = true, telescope = true })
+      require('webdever-theme').setup({
+        mode = 'dark',
+        cmp = true,
+        telescope = true,
+        whichkey = true,
+        rainbow = true,
+        ibl = true,
+        neotree = true,
+        bufferline = false,
+      })
     end,
   },
 
