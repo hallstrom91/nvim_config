@@ -41,4 +41,22 @@ function M.open_diagnostics_with_telescope()
     print('Nothing to fix silly human!')
   end
 end
+
+function M.diagnostics_indicator(count, level, diagnostics_dict, context)
+  if context.buffer:current() then
+    return ''
+  end
+
+  local symbols = { error = ' ', warning = ' ' }
+  local result = {}
+
+  for severity, num in pairs(diagnostics_dict) do
+    if symbols[severity] then
+      table.insert(result, symbols[severity] .. ' ' .. num)
+    end
+  end
+
+  return table.concat(result, ' ')
+end
+
 return M
