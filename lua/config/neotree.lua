@@ -2,18 +2,11 @@ local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local git_actions = require('modules.git.git_actions')
 local events = require('neo-tree.events')
---local window_picker = require('window-picker')
 
 vim.fn.sign_define('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError' })
 vim.fn.sign_define('DiagnosticSignWarn', { text = ' ', texthl = 'DiagnosticSignWarn' })
 vim.fn.sign_define('DiagnosticSignInfo', { text = ' ', texthl = 'DiagnosticSignInfo' })
 vim.fn.sign_define('DiagnosticSignHint', { text = '󰌵', texthl = 'DiagnosticSignHint' })
-
---[[ window_picker.setup({
-  selection_chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', -- Valbara tecken för fönster
-  autoselect_one = true, -- Om bara ett fönster är öppet, välj det automatiskt
-  include_current_win = false, -- Exkludera nuvarande fönster från valet
-}) ]]
 
 require('neo-tree').setup({
   -- General settings
