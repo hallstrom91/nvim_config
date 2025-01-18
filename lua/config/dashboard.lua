@@ -1,15 +1,7 @@
 local api = vim.api
 local map = vim.keymap.set
 local dashboard = require('dashboard')
-
-local function load_imgs(file)
-  local success, header = pcall(require, 'themes.dash-headers.' .. file)
-  if success then
-    return header
-  else
-    return { 'Error loading ascii img files: ' .. file }
-  end
-end
+local logo = require('modules.ui.logo')
 
 local function open_link(link)
   vim.fn.jobstart({ 'xdg-open', link }, { detach = true }) -- For Linux
@@ -17,12 +9,9 @@ local function open_link(link)
   -- vim.fn.jobstart({"start", link}, {detach = true}) -- For Windows
 end
 
--- Load header ASCII image by filename
-local selected_header = 'dash_neovim' -- or "dash_nvim"
-
 local conf = {}
 
-conf.header = load_imgs(selected_header)
+conf.header = logo.neovim_ascii_art
 
 conf.center = {
 
@@ -77,7 +66,7 @@ conf.center = {
   },
 }
 
--- conf.footer = load_imgs(selected_footer)
+-- conf.footer =  footer option here if wanted
 
 dashboard.setup({
   theme = 'doom',
