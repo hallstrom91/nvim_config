@@ -15,6 +15,7 @@ return {
           'html',
           'css',
           'javascript',
+          'tsx', -- ?
           'typescript',
           'json',
           'jsonc',
@@ -144,20 +145,14 @@ return {
         },
         query = {
           [''] = 'rainbow-delimiters',
+          javascript = 'rainbow-parens',
+          typescript = 'rainbow-parens',
+          tsx = 'rainbow-parens',
           lua = 'rainbow-blocks',
         },
         priority = {
           [''] = 110,
           lua = 210,
-        },
-        highlight = {
-          'RainbowDelimiterRed',
-          'RainbowDelimiterYellow',
-          'RainbowDelimiterBlue',
-          'RainbowDelimiterOrange',
-          'RainbowDelimiterGreen',
-          'RainbowDelimiterViolet',
-          'RainbowDelimiterCyan',
         },
       }
     end,
