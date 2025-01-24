@@ -1,7 +1,6 @@
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 local git_actions = require('modules.git.git_actions')
-local events = require('neo-tree.events')
 
 vim.fn.sign_define('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError' })
 vim.fn.sign_define('DiagnosticSignWarn', { text = ' ', texthl = 'DiagnosticSignWarn' })
@@ -154,6 +153,14 @@ require('neo-tree').setup({
   window = {
     position = 'left',
     width = 40,
+    popup = {
+      size = {
+        height = '80%',
+        width = '50%',
+      },
+      position = '50%',
+      popup_border_style = 'rounded', -- Border style for popups (rounded, single, double)
+    },
 
     -- git commands from fileexplorer menu!
     mappings = {
@@ -173,6 +180,7 @@ require('neo-tree').setup({
         git_actions.git_move_file,
         desc = 'Git move file (no folders)',
       },
+      ['gp'] = { desc = 'Git Push', 'git_push' },
     },
   }, -- End of window settings
 
