@@ -125,6 +125,7 @@ local servers = {
   },
   -- JSON
   jsonls = {
+    root_dir = util.root_pattern('package.json', '.git', '.'),
     filetypes = { 'json', 'jsonc' },
   },
 }
@@ -141,7 +142,7 @@ local on_attach = function(client, bufnr)
     'yamlls',
     'marksman',
     'jsonls',
-    'quick_lint_js', -- test
+    --'quick_lint_js', -- test
   }
 
   if vim.tbl_contains(exclude_formatting, client.name) then
@@ -191,6 +192,11 @@ end, {})
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
-map('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', vim.tbl_extend('force', opts, { desc = 'Go to definition' }))
-map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', vim.tbl_extend('force', opts, { desc = 'Find references' }))
-map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', vim.tbl_extend('force', opts, { desc = 'Hover documentation' }))
+map(
+  'n',
+  'gd',
+  '<cmd>lua vim.lsp.buf.definition()<CR>',
+  vim.tbl_extend('force', opts, { desc = 'LSP Go to definition' })
+)
+map('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', vim.tbl_extend('force', opts, { desc = 'LSP Find references' }))
+map('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', vim.tbl_extend('force', opts, { desc = 'LSP Hover documentation' }))
