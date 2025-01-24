@@ -1,29 +1,28 @@
 local map = vim.keymap.set
 local lsp_actions = require('modules.diagnostics.lsp_actions')
+local git = require('modules.git.git_info')
+
 require('bufferline').setup({
   options = {
     mode = 'buffers', -- show buffers instead of tabs
-    -- style_preset = require('bufferline').style_preset.default,
+    style_preset = require('bufferline').style_preset.default,
     themable = true,
     numbers = 'ordinal', -- (can be "none", "ordinal", "buffer_id", or "both")
     diagnostics = 'nvim_lsp',
     diagnostics_update_on_event = true,
     close_command = 'bdelete! %d',
-    right_mouse_command = 'bdelete! %d', -- close buffer with right-click
-    left_mouse_command = 'buffer %d', -- switch to buffer with left-click
+    right_mouse_command = 'bdelete! %d',
+    left_mouse_command = 'buffer %d',
     middle_mouse_command = nil, -- no action on middle-click
     --color_icons = true,
     diagnostics_indicator = lsp_actions.diagnostics_indicator,
     offsets = {
       {
         filetype = 'neo-tree',
-        text = 'File Explorer',
-        --[[   text = function()
-          local cwd = vim.fn.getcwd()
-          return cwd .. 'File Explorer'
-        end, ]]
+        text = function()
+          return ' ' .. git.get_current_branch()
+        end,
         highlight = 'Directory',
-        --separator =
       },
     },
     hover = {
