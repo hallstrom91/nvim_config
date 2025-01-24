@@ -9,12 +9,13 @@ vim.o.splitbelow = false -- Open windows horizontal
 vim.o.splitright = true -- Open windows vertical
 vim.g.loaded_netrw = 1 -- disable netrw
 vim.g.loaded_netrwPlugin = 1 -- disable netrw
-vim.o.foldenable = true -- enable folding
 vim.o.foldlevel = 99
 vim.o.foldlevelstart = 99
 vim.o.foldcolumn = '1'
+vim.o.foldenable = true
+vim.o.foldexpr = 'v:lua.require("ufo").foldexpr()'
+vim.o.foldmethod = 'expr'
 -- vim.o.mousemoveevent = true -- "true" to activate hoover on buffertabs
---vim.o.foldmethod = "expr"
 --vim.o.foldexpr = "nvim_treesitter#foldexpr()"
 
 vim.opt.clipboard = 'unnamedplus' -- sync clipboard actions with system clipboard
