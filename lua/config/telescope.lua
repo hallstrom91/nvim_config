@@ -60,24 +60,6 @@ telescope.setup({
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('noice')
 
---[[ vim.keymap.set("n", "<leader>fc", builtin.commands, { desc = "Telescope Commands" })
-vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "Telescope Keymaps" })
-vim.keymap.set("n", "<leader>hh", builtin.help_tags, { desc = "Telescope Help Tags" })
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { desc = "Telescope find files" })
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { desc = "Telescope live grep" })
-vim.keymap.set("n", "<leader>fw", builtin.grep_string, { desc = "Telescope Grep Current Word" })
-vim.keymap.set("n", "<leader>fq", builtin.quickfix, { desc = "Telescope Quickfix" })
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Telescope buffers" })
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Telescope help tags" })
-vim.keymap.set("n", "<leader>fr", builtin.oldfiles, { desc = "Telescope recently opened files" })
-vim.keymap.set("n", "<leader>fd", builtin.diagnostics, { desc = "Telescope Diagnostics" })
--- vim.keymap.set("n", "<leader>fr", builtin.registers, { desc = "Telescope Registers" })
-
--- Git binds
-vim.keymap.set("n", "<leader>gb", builtin.git_branches, { desc = "Telescope Git Branches" })
-vim.keymap.set("n", "<leader>gc", builtin.git_commits, { desc = "Telescope Git Commits" })
-vim.keymap.set("n", "<leader>gs", builtin.git_status, { desc = "Telescope Git Status" }) ]]
-
 -- Keybinds for telescope
 local keymaps = {
   { '<leader>fc', builtin.commands, 'Telescope Commands' },
@@ -93,6 +75,9 @@ local keymaps = {
   { '<leader>gb', builtin.git_branches, 'Telescope Git Branches' },
   { '<leader>gc', builtin.git_commits, 'Telescope Git Commits' },
   { '<leader>gs', builtin.git_status, 'Telescope Git Status' },
+  { '<leader>gB', builtin.git_bcommits, 'Telescope Git Buffer Status' },
+  { '<leader>gS', builtin.git_stash, 'Telescope Git StashBox' },
+  { '<leader>gf', builtin.git_files, 'Telescope Git Tracked Files' },
 }
 
 for _, map in ipairs(keymaps) do
