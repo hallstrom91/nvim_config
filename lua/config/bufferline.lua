@@ -4,19 +4,23 @@ local git = require('modules.git.git_info')
 
 require('bufferline').setup({
   options = {
-    mode = 'tabs', -- show buffers instead of tabs
+    mode = 'buffers', -- show buffers instead of tabs
     style_preset = require('bufferline').style_preset.default,
     themable = true,
     numbers = 'ordinal', -- (can be "none", "ordinal", "buffer_id", or "both")
     diagnostics = 'nvim_lsp',
     diagnostics_update_on_event = true,
+
+    -- if mode = "tabs"
+    --[[
     close_command = 'tabclose',
     right_mouse_command = 'tabclose',
-    left_mouse_command = 'tabnext %d',
+    left_mouse_command = 'tabnext %d', ]]
+
     -- if mode = "buffers" -- use below
-    --[[     close_command = 'bdelete! %d',
+    close_command = 'bdelete! %d',
     right_mouse_command = 'bdelete! %d',
-    left_mouse_command = 'buffer %d', ]]
+    left_mouse_command = 'buffer %d',
     middle_mouse_command = nil, -- no action on middle-click
     --color_icons = true,
     diagnostics_indicator = lsp_actions.diagnostics_indicator,

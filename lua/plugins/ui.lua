@@ -139,6 +139,7 @@ return {
     dir = '~/.local/share/nvim/lazy/webdever-theme',
     enabled = true,
     config = function()
+      --   vim.cmd([[colorscheme webdever-theme]])
       require('webdever-theme').setup({
         mode = 'dark',
         cmp = true,
