@@ -4,7 +4,7 @@ local git = require('modules.git.git_info')
 
 require('bufferline').setup({
   options = {
-    mode = 'buffers', -- show buffers instead of tabs
+    mode = 'tabs', -- show buffers instead of tabs
     style_preset = require('bufferline').style_preset.default,
     themable = true,
     numbers = 'ordinal', -- (can be "none", "ordinal", "buffer_id", or "both")
@@ -12,15 +12,13 @@ require('bufferline').setup({
     diagnostics_update_on_event = true,
 
     -- if mode = "tabs"
-    --[[
     close_command = 'tabclose',
     right_mouse_command = 'tabclose',
-    left_mouse_command = 'tabnext %d', ]]
-
+    left_mouse_command = 'tabnext %d',
     -- if mode = "buffers" -- use below
-    close_command = 'bdelete! %d',
-    right_mouse_command = 'bdelete! %d',
-    left_mouse_command = 'buffer %d',
+    -- close_command = 'bdelete! %d',
+    -- right_mouse_command = 'bdelete! %d',
+    -- left_mouse_command = 'buffer %d',
     middle_mouse_command = nil, -- no action on middle-click
     --color_icons = true,
     diagnostics_indicator = lsp_actions.diagnostics_indicator,
@@ -62,9 +60,12 @@ require('bufferline').setup({
   },
 })
 
-map('n', '<Tab>', ':BufferLineCycleNext<CR>', { desc = 'Next buffer' })
-map('n', '<S-Tab>', ':BufferLineCyclePrev<CR>', { desc = 'Prev buffer' })
+-- Keybinds for "buffers"-mode
+--map('n', '<Tab>', ':BufferLineCycleNext<CR>', { desc = 'Next buffer' })
+--map('n', '<S-Tab>', ':BufferLineCyclePrev<CR>', { desc = 'Prev buffer' })
 
+-- Keybinds for "tabs"-mode
+map('n', '<Tab>', ':tabnext<CR>', { desc = 'Next tab' })
+map('n', '<S-Tab>', ':tabprevious<CR>', { desc = 'Previous tab' })
 map('n', '<leader>tn', ':tabnew<CR>', { desc = 'Open a new tab' })
-
 map('n', '<leader>tc', ':tabclose<CR>', { desc = 'Close current tab' })
