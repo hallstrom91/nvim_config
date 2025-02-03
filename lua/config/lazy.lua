@@ -4,11 +4,11 @@ require('lazy').setup({
   },
   install = { colorscheme = { 'habamax' } },
   -- automatically check for plugin updates
-  checker = { enabled = true },
+  checker = { enabled = true, frequency = 86400 },
   opts = {
     rocks = {
-      enabled = false, -- disable luarocks (still gives error in checkhealth)
-      hererocks = false, -- disable hererocks (still gives error in checkhealth)
+      enabled = false,
+      hererocks = false,
     },
   },
 })
