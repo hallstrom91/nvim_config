@@ -35,8 +35,7 @@ return {
       local mason_lspconfig = require('mason-lspconfig')
 
       mason_lspconfig.setup({
-        -- Only LSP servers (auto-install)
-        -- List of MASON LSP servers can be found thru cmdline with command "Mason".
+        --> Only LSP servers (auto-install)
         ensure_installed = {
           'ts_ls',
           'html',
@@ -52,6 +51,7 @@ return {
           'css_variables',
           'bashls',
           'jsonls',
+          'omnisharp',
         },
         automatic_installation = true,
       })
@@ -64,15 +64,16 @@ return {
     config = function()
       require('mason-tool-installer').setup({
         ensure_installed = {
-          -- Linters och formatters
+          ----> Linters och formatters
           'bash-language-server',
           'bash-debug-adapter',
           'markdownlint-cli2',
           'prettierd',
-          --  'prettier', -- 'prettierd' is faster.
+          --| 'prettier', |---> 'prettierd' is faster.
           'shellcheck',
           'shfmt',
           'stylua',
+          'csharpier',
         },
         auto_update = true,
         run_on_start = true,
@@ -111,7 +112,7 @@ return {
     dependencies = {
       'rafamadriz/friendly-snippets',
     },
-    -- install jsregexp (optional!).
+    ----> install jsregexp (optional!).
     build = 'make install_jsregexp',
     event = { 'InsertEnter' },
     config = function()
@@ -132,9 +133,9 @@ return {
     dependencies = { 'neovim/nvim-lspconfig' },
     config = function()
       vim.g.lspTimeoutConfig = {
-        stopTimeout = 1000 * 60 * 25, -- 25min until LSP shutdown if inactive.
-        startTimeout = 1000 * 5, -- 5s to restart LSP for buffer
-        silent = false, -- Notifications if deactivated / activated
+        stopTimeout = 1000 * 60 * 25, ----> 25min until LSP shutdown if inactive.
+        startTimeout = 1000 * 5, ----> 5s to restart LSP for buffer
+        silent = false,
         filetypes = {
           ignore = { 'markdown', 'plaintext' },
         },
@@ -201,7 +202,7 @@ return {
 
   {
     'linrongbin16/lsp-progress.nvim',
-    dependencies = { 'nvim-lualine/lualine.nvim' }, -- Lualine integration
+    dependencies = { 'nvim-lualine/lualine.nvim' }, ----> Lualine integration
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       require('lsp-progress').setup()
