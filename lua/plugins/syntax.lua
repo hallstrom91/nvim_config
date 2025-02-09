@@ -19,6 +19,7 @@ return {
           'typescript',
           'json',
           'jsonc',
+          'c_sharp',
         },
         sync_install = false,
         auto_install = false,
@@ -76,6 +77,7 @@ return {
           markdown = { 'prettierd' },
           json = { 'prettierd' },
           jsonc = { 'prettierd' },
+          csharp = { 'csharpier' },
         },
         format_on_save = {
           timeout_ms = 1000,
