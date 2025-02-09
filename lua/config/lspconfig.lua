@@ -1,31 +1,29 @@
 local lspconfig = require('lspconfig')
 local util = require('lspconfig.util')
+local mason_omnisharp_path = vim.fn.stdpath('data') .. '/mason/packages/omnisharp/libexec/OmniSharp.dll' ----> To get correct version of .NET in command "LspInfo"
 
--- LSP Capabilities
+----> LSP Capabilities
 local init_capabilities = vim.lsp.protocol.make_client_capabilities()
 local ufo_capabilities = vim.lsp.protocol.make_client_capabilities()
 
--- CMP & UFO
+----> CMP & UFO
 init_capabilities = require('cmp_nvim_lsp').default_capabilities(init_capabilities)
 ufo_capabilities.textDocument.foldingRange = {
   dynamicRegistration = false,
   lineFoldingOnly = true,
 }
 init_capabilities = vim.tbl_deep_extend('keep', init_capabilities, ufo_capabilities)
---init_capabilities = vim.tbl_deep_extend('force', init_capabilities, ufo_capabilities)
 
--- LSP Flags
 local lsp_flags = { debounce_text_changes = 150 }
 
--- List of LSP servers - Manual start required
 local manual_servers = {
   'tailwindcss',
   'css_variables',
 }
 
--- List of LSP servers - Auto start @ correct filetype
+----> List of LSP servers - Auto start @ correct filetype
 local servers = {
-  -- Typescript & JavaScript
+  ----> Typescript & JavaScript
   ts_ls = {
     root_dir = util.root_pattern('tsconfig.json', 'jsconfig.json', 'package.json', '.git'),
     settings = {
@@ -41,7 +39,7 @@ local servers = {
       },
     },
   },
-  -- CSS
+  ----> CSS
   cssls = {
     filetypes = {
       'css',
@@ -49,11 +47,11 @@ local servers = {
       'less',
     },
   },
-  -- HTML
+  ----> HTML
   html = { filetypes = { 'html' } },
-  -- Python
+  ----> Python
   pyright = { filetypes = { 'python' } },
-  -- Lua
+  ----> Lua
   lua_ls = {
     settings = {
       Lua = {
@@ -84,11 +82,11 @@ local servers = {
     filetypes = { 'lua' },
   },
 
-  -- Markdown (github readme etc)
+  ----> Markdown (github readme etc)
   marksman = {
     filetypes = { 'markdown' },
   },
-  -- JavaScript Linting
+  ----> JavaScript Linting
   quick_lint_js = {
     filetypes = {
       'javascript',
@@ -97,17 +95,17 @@ local servers = {
       'typescript',
     },
   },
-  -- Vim
+  ----> Vim
   vimls = {
     filetypes = {
       'vim',
     },
   },
-  -- YAML
+  ----> YAML
   yamlls = {
     filetypes = { 'yaml', 'yml' },
   },
-  -- CSS modules
+  ----> CSS modules
   cssmodules_ls = {
     filetypes = {
       --	"typescript",
@@ -119,20 +117,43 @@ local servers = {
     camelCase = true,
   },
 
-  -- Bash (.sh -files)
+  ----> Bash (.sh -files)
   bashls = {
     filetypes = { 'sh', 'bash' },
   },
-  -- JSON
+  ----> JSON
   jsonls = {
     root_dir = util.root_pattern('package.json', '.git', '.'),
     filetypes = { 'json', 'jsonc' },
   },
+  ----> C# .NET
+  omnisharp = {
+    cmd = { 'dotnet', mason_omnisharp_path },
+    filetypes = { 'cs' },
+    root_dir = util.root_pattern('*.sln', '*.csproj', '.git'),
+    settings = {
+      FormattingOptions = {
+        EnableEditorConfigSupport = true,
+        OrganizeImports = true,
+      },
+      MsBuild = {
+        LoadProjectsOnDemand = true,
+      },
+      RoslynExtensionsOptions = {
+        EnableAnalyzersSupport = true,
+        EnableImportCompletion = true,
+        AnalyzeOpenDocumentsOnly = true,
+      },
+      Sdk = {
+        IncludePrereleases = false,
+      },
+    },
+  },
 }
 
--- deactivate LSP formatting in favor of prettier, stylua, black etc.
+---@diagnostic disable-next-line: unused-local
 local on_attach = function(client, bufnr)
-  -- Use prettierd instead of LSP formatter
+  ----> Use prettierd instead of LSP formatter
   local exclude_formatting = {
     'ts_ls',
     'html',
@@ -142,16 +163,21 @@ local on_attach = function(client, bufnr)
     'yamlls',
     'marksman',
     'jsonls',
-    --'quick_lint_js', -- test
+    'omnisharp',
   }
 
   if vim.tbl_contains(exclude_formatting, client.name) then
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.document_range_formatting = false
   end
+
+  --deactive semantic tokens from omnisharp (fix treesitter color)
+  --[[   if client.name == 'omnisharp' then
+    client.server_capabilities.semanticTokensProvider = nil
+  end ]]
 end
 
--- Auto start LSP servers
+----> Auto start LSP servers
 for server, config in pairs(servers) do
   lspconfig[server].setup(vim.tbl_deep_extend('force', {
     on_attach = on_attach,
@@ -160,7 +186,7 @@ for server, config in pairs(servers) do
   }, config))
 end
 
--- Manual start for specific LSP server
+----> Manual start for specific LSP server
 vim.api.nvim_create_user_command('StartLsp', function(opts)
   local server_name = opts.args
   if lspconfig[server_name] then
@@ -180,7 +206,7 @@ end, {
   end,
 })
 
--- Restart All LSP servers and CMP
+----> Restart All LSP servers and CMP
 vim.api.nvim_create_user_command('RestartLsp', function()
   vim.cmd('LspStop')
   vim.cmd('LspStart')
@@ -188,10 +214,11 @@ vim.api.nvim_create_user_command('RestartLsp', function()
   print('All LSP servers and CMP restarted!')
 end, {})
 
--- LSP related keybinds
+----> LSP related keybinds
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
+----> LSP keymaps
 map(
   'n',
   'gd',
